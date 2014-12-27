@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1418799676 source:e:\github\co-codec\fse\fse.c
+	"fse.h"
+	<stddef.h>
+	<string.h>
+	<stdio.h>
+	<stdint.h>
+	<intrin.h>
+
+1418799676 e:\github\co-codec\fse\fse.h
+	<stddef.h>
+
+1418799676 source:e:\github\co-codec\fse\fseu16.c
+	"fseU16.h"
+	"fse.c"
+
+1418799676 e:\github\co-codec\fse\fseu16.h
+
+1418799676 e:\github\co-codec\fse\fse.c
+	"fse.h"
+	<stddef.h>
+	<string.h>
+	<stdio.h>
+	<stdint.h>
+	<intrin.h>
+
