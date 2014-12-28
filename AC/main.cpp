@@ -6,11 +6,12 @@
 #include "ArithCodec.h"
 #include "ModelHuff.h"
 #include "ModelArith.h"
+#include <stdlib.h>
 using namespace std;
 
 
 int Encode(string enc_in,string enc_out,ModelHuff &Mod)
-{	
+{
 	fstream EnInFile,EnOutFile;
 
 	EnInFile.open(enc_in,ios::in | ios::binary);
@@ -66,8 +67,8 @@ void Decode(string dec_in,string  dec_out,ModelHuff &Mod,unsigned int num)
 	DeOutFile.open(dec_out,ios::out | ios::binary);
 
 	HuffCodec DecodeIn(&DeInFile),DecodeOut(&DeOutFile);
-	
-	
+
+
 	DecodeIn.Decode(DecodeOut,Mod,num);
 
 	DeInFile.close();
@@ -87,8 +88,8 @@ void Decode(string dec_in,string  dec_out,ModelArith &Mod,unsigned int num)
 	DeOutFile.open(dec_out,ios::out | ios::binary);
 
 	ArithCodec DecodeIn(&DeInFile),DecodeOut(&DeOutFile);
-	
-	
+
+
 	DecodeIn.Decode(DecodeOut,Mod,num);
 
 	DeInFile.close();
@@ -118,7 +119,7 @@ double Compare(string enc_in,string enc_out,string dec_out)
 		throw "Open decode output file FAILURE!";
 	}
 
-	
+
 	EnInFile.seekg(0,ios::end);
 	EnOutFile.seekg(0,ios::end);
 	DeOutFile.seekg(0,ios::end);
@@ -133,13 +134,13 @@ double Compare(string enc_in,string enc_out,string dec_out)
 		DeOutFile.close();
 		throw "Compress Failure\n";
 	}
-		
+
 	while(EnInFile.peek()!=EOF)
 	{
 		char temp1,temp2;
 		EnInFile.read((char *)(&temp1),sizeof(temp1));
-		DeOutFile.read((char *)(&temp2),sizeof(temp2));	
-		if(temp1!=temp2) 
+		DeOutFile.read((char *)(&temp2),sizeof(temp2));
+		if(temp1!=temp2)
 		{
 			EnInFile.close();
 			DeOutFile.close();
@@ -177,12 +178,11 @@ double Code_Model(string enc_in,ModelHuff &Mod)
 
 string file[5][5]={
 					{"Life1.txt","Life2.txt","Life3.txt","Life4.txt","Life5.txt"},
-					{"Sports1.txt","Sports2.txt","Sports3.txt","Sports4.txt","Sports5.txt"},					
+					{"Sports1.txt","Sports2.txt","Sports3.txt","Sports4.txt","Sports5.txt"},
 					{"Market1.txt","Market2.txt","Market3.txt","Market4.txt","Market5.txt"},
 					{"Culture1.txt","Culture2.txt","Culture3.txt","Culture4.txt","Culture5.txt"},
-					{"Medecine1.txt","Medecine2.txt","Medecine3.txt","Medecine4.txt","Medecine5.txt"},	
+					{"Medecine1.txt","Medecine2.txt","Medecine3.txt","Medecine4.txt","Medecine5.txt"},
 				  };
-
 
 int main()
 {
@@ -216,7 +216,7 @@ int main()
 			average += diff;
 			cout<<"File: "<<setiosflags(ios::left)<<setfill(' ')<<setw(15)<<"\""+file[i][j]+"\"";
 			cout<<"    Huffm_Rate= "<<setiosflags(ios::fixed)<<setprecision(1)<<Huffm_Rate[i][j]*100<<"%";
-			cout<<"    Arith_Rate= "<<setiosflags(ios::fixed)<<setprecision(1)<<Arith_Rate[i][j]*100<<"%";					
+			cout<<"    Arith_Rate= "<<setiosflags(ios::fixed)<<setprecision(1)<<Arith_Rate[i][j]*100<<"%";
 			cout<<"    D="<<setiosflags(ios::right)<<setfill(' ')<<setw(4)<<setiosflags(ios::fixed)<<setprecision(1)<<diff*100<<"%"<<endl;
 		}
 	}
@@ -225,5 +225,5 @@ int main()
 	cout<<setiosflags(ios::fixed)<<setprecision(1)<<average*100<<"%."<<endl<<endl;
 	system("pause");
 }
-
+#endif
 

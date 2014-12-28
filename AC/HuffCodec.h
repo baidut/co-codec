@@ -10,23 +10,23 @@ using namespace std;
 class HuffCodec
 {
 public:
-	HuffCodec(fstream *file=nullptr);
+	HuffCodec(fstream *file=NULL/*nullptr*/);
 	int Encode(HuffCodec &EnOutput,ModelHuff &Mod);
 	void Decode(HuffCodec &DeOutput,ModelHuff &Mod,unsigned int n);
 	void SetFile(fstream *file);
 	char GetChar();
 protected:
-	//bit/byte operation 
+	//bit/byte operation
 	void SetBit(char bit);
 	void SetBitFlush();
-	char GetBit();	
-	
+	char GetBit();
+
 	//encode and decode
 	void Encode_Init();
-	void HuffCodec::Encode_Char(HuffCodec &EnOutput,ModelHuff &Mod);
+	void Encode_Char(HuffCodec &EnOutput,ModelHuff &Mod);
 	void Encode_End(HuffCodec &EnOutFile);
 	void Decode_Init();
-	void HuffCodec::Decode_Char(HuffCodec &DeOutput,ModelHuff &Mod);
+	void Decode_Char(HuffCodec &DeOutput,ModelHuff &Mod);
 	//parameter
 	fstream *mFile;
 	unsigned char mBitBuffer;

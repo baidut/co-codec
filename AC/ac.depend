@@ -1,0 +1,35 @@
+# depslib dependency file v1.0
+1395840808 source:e:\github\co-codec\ac\arithcodec.cpp
+	<iostream>
+	<fstream>
+	"ArithCodec.h"
+
+1419756771 e:\github\co-codec\ac\arithcodec.h
+	<iostream>
+	<fstream>
+	"Parameter.h"
+	"ModelArith.h"
+
+1395840808 e:\github\co-codec\ac\parameter.h
+
+1395839434 e:\github\co-codec\ac\modelarith.h
+	<iostream>
+	<fstream>
+	"Parameter.h"
+
+1395840808 source:e:\github\co-codec\ac\huffcodec.cpp
+	<iostream>
+	<fstream>
+	"HuffCodec.h"
+
+1419756800 e:\github\co-codec\ac\huffcodec.h
+	<iostream>
+	<fstream>
+	"Parameter.h"
+	"ModelHuff.h"
+
+1395840808 e:\github\co-codec\ac\modelhuff.h
+	<iostream>
+	<fstream>
+	"Parameter.h"
+
