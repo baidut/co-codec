@@ -13,6 +13,8 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="E:/github/co-codec/FSE/fse_test/" />
+					<Add directory="E:/github/co-codec/FSE/" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -31,9 +33,46 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="main.c">
+		<Unit filename="../fse.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../fse.h" />
+		<Unit filename="../fseU16.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../fseU16.h" />
+		<Unit filename="bench.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="bench.h" />
+		<Unit filename="commandline.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="fileio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="fileio.h" />
+		<Unit filename="fseDist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="fseDist.h" />
+		<Unit filename="logDiffCost.h" />
+		<Unit filename="lz4hce.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lz4hce.h" />
+		<Unit filename="renorm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="renorm.h" />
+		<Unit filename="xxhash.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="xxhash.h" />
+		<Unit filename="zlibh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="zlibh.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

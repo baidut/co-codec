@@ -54,7 +54,7 @@
 #  include <fcntl.h>    // _O_BINARY
 #  include <io.h>       // _setmode, _isatty
 #  ifdef __MINGW32__
-   int _fileno(FILE *stream);   // MINGW somehow forgets to include this windows declaration into <stdio.h>
+/// E:\github\co-codec\FSE\fse_test\commandline.c|57|error: expected ')' before '*' token|   int _fileno(FILE *stream);   // MINGW somehow forgets to include this windows declaration into <stdio.h>
 #  endif
 #  define SET_BINARY_MODE(file) _setmode(_fileno(file), _O_BINARY)
 #  define IS_CONSOLE(stdStream) _isatty(_fileno(stdStream))
