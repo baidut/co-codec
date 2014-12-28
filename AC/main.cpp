@@ -183,6 +183,146 @@ string file[5][5]={
 					{"Culture1.txt","Culture2.txt","Culture3.txt","Culture4.txt","Culture5.txt"},
 					{"Medecine1.txt","Medecine2.txt","Medecine3.txt","Medecine4.txt","Medecine5.txt"},
 				  };
+#if 1//1
+#define DISPLAY(...)         fprintf(stderr, __VA_ARGS__)
+#define DISPLAYLEVEL(l, ...) if (displayLevel>=l) { DISPLAY(__VA_ARGS__); }
+static char* programName;
+static int   displayLevel = 2;
+// 0 : no display  // 1: errors  // 2 : + result + interaction + warnings ;  // 3 : + progression;  // 4 : + information
+static int   fse_pause = 0;
+
+static int usage(void)
+{
+    DISPLAY("Usage :\n");
+    DISPLAY("%s [arg] inputFilename [-o [outputFilename]]\n", programName);
+    DISPLAY("Arguments :\n");
+    DISPLAY(" -1 : using arithmetic\n");
+    DISPLAY(" -2 : using huffman\n");
+    DISPLAY(" -d : decompression\n");
+    DISPLAY(" -h/-H : display help/long help and exit\n");
+    return 0;
+}
+static int badusage(void)
+{
+    DISPLAYLEVEL(1, "Incorrect parameters\n");
+    if (displayLevel >= 1) usage();
+    exit(1);
+}
+
+int main(){
+
+     int   i,
+          forceCompress=0, decode=0, bench=3, benchLZ4e=0; // default action if no argument
+    int   algoNb = -1;
+    int   indexFileNames=0;
+    char* input_filename=0;
+    char* output_filename=0;
+    int   nextNameIsOutput = 0;
+
+    // Welcome message
+    programName = argv[0];
+    DISPLAY(WELCOME_MESSAGE);
+
+    if (argc<1) badusage();
+
+    for(i = 1; i <= argc; i++)
+    {
+        char* argument = argv[i];
+        nextNameIsOutput --;
+
+        if(!argument) continue;   // Protection if argument empty
+
+        // Decode command (note : aggregated commands are allowed)
+        if (argument[0]=='-')
+        {
+            // '-' means stdin/stdout
+            if (argument[1]==0)
+            {
+                if (!input_filename) input_filename=stdinmark;
+                else output_filename=stdoutmark;
+            }
+
+            while (argument[1]!=0)
+            {
+                argument ++;
+
+                switch(argument[0])
+                {
+                    // Display help
+                case 'V': DISPLAY(WELCOME_MESSAGE); return 0;   // Version
+                case 'h':
+                case 'H': usage(); return 0;
+
+                    // compression
+                case 'o': bench=0; nextNameIsOutput=2; break;
+
+                    // Decoding
+                case 'd': decode=1; bench=0; break;
+
+                    // Benchmark full mode
+                case 'b': bench=1; break;
+                    // zlib Benchmark mode
+                case 'z':
+                    bench=1;
+                    BMK_SetByteCompressor(3);
+                    break;
+
+                    // Verbose mode
+                case 'v': displayLevel=4; break;
+
+                    // Quiet mode
+                case 'q': displayLevel--; break;
+
+                    // Pause at the end (hidden option)
+                case 'p': fse_pause=1; break;
+
+                    // Unrecognised command
+                default : badusage();
+                }
+            }
+            continue;
+        }
+
+        // following -o argument
+        if (nextNameIsOutput == 1) { output_filename=argument; continue; }
+
+        // first provided filename is input
+        if (!input_filename) { input_filename=argument; indexFileNames=i; continue; }
+    }
+
+    // End of command line reading
+    DISPLAYLEVEL(3, WELCOME_MESSAGE);
+
+    // No input filename ==> use stdin
+    if(!input_filename) badusage();
+
+    // Check if benchmark is selected
+    if (bench==1) { ModelArith Mod(input_filename);}
+    if (bench==3) { ModelHuff Mod(input_filename);}
+
+    if (decode) {
+            num = sscanf(input_filename,"[%d]")
+            Decode(input_filename,output_filename,Mod,num);
+    }
+    else Encode(input_filename,output_filename,Mod);
+
+
+    num
+
+    							//create model for Encoding
+    Huffm_Rate[i][j]=Code_Model(file[i][j],Mod);
+        string enc_out="_EnOut_Arith_"+enc_in;
+        string dec_out="_DeOut_Arith_"+enc_in;
+        int num=Encode(enc_in,enc_out,Mod);
+
+
+
+
+_end:
+    if (fse_pause) waitEnter();
+    return 0;
+}
+#else
 
 int main()
 {
