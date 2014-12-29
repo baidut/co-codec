@@ -1,0 +1,66 @@
+\documentclass[11pt]{article}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{a4wide}
+
+\usepackage[pdf]{pstricks}
+
+\title{Aritmetické kódování}
+\author{Tomáš Maršálek}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Zadání}
+Naprogramujte v ANSI C přenositelnou konzolovou aplikaci, která jako vstup
+načte z parametru na příkazové řádce jmého souboru, který se má
+zkomprimovat/dekomprimovat, a jméno výstupního souboru, do kterého uloží
+zkomprimovaná/dekomprimovaná data. Program bude data komprimovat technikou
+aritmetické komprese (angl. Arithmetic Coding). Zda se bude provádět komprese
+nebo dekomprese se určí přepínačem na příkazové řádce.
+
+\section{Analýza úlohy}
+Aritmetické kódování patří do kategorie takzvaných entropických kodérů. Ty ke
+kompresi využívají pravděpodobnostní rozdělení znaků řetězce. Příkladem je
+Morseova abeceda nebo Huffmanovo kódování. Obě tyto techniky přiřadí
+frekventovanějším znakům kratší kód a naopak delší méně frekventovaným.  Tato
+kategorie kodérů je již vyřešený problém, protože Huffmanovo kódování přiřadí
+každému znaku optimální kód pro daný vstup. Teoreticé maximum zakódování
+popisuje Shannonova věta o kódování bez šumu, podle ní je optimální délka
+$\log_2 \frac{1}{P}$ bitů na znak. $P$ je pravěpodobnost výskytu znaku.  Huffman,
+přestože určuje optimální kódy, teoretického minima dosáhne pouze pokud je
+pravděpodobnost znaku mocnina dvou, logaritmus pak vyjde celočíselně.
+Aritmeticé kódování však funguje na jiném pricipu a díky tomu je možné znakům
+přiřadit i kódy neceločíselné délky.  Zakóduje celou zprávu jako celek a tedy
+ve výsledku mohou mít jednotlivé znaky i zlomkové délky.
+
+\subsection{Princip}
+Vstup je mapován na číslo v intervalu $[0, 1)$. Interval je rozdělen na úseky
+odpovídající šířkou pravděpodobnostem znaků. Vstupní znak poté určí
+odpovídající subinterval, čímž o sobě zaznamená jednoznačnou informaci. Tento
+subinterval je rozdělen stejným způsobem podle pravděpodobností a další znak
+vybere svůj subinterval. Tímto způsobem se zakódují všechny znaky. Aritmetické
+kódování vlastně využívá nekonečné dělitelnosti množiny reálných čísel.
+
+\paragraph{Příklad}
+Pravděpodobnosti výskytu znaků jsou $A : 0.3$, $B : 0.5$, $C : 0.2$. Kódované
+slovo je $BAC$. V každém kroku je zvýrazněn právě vybraný interval a jeho
+rozdělení. Poté co určíme poslední subinterval, vybereme z něj libovolné číslo.
+To bude tvořit aritmetický kód zprávy.
+\input{figure1} \\[1cm]
+
+Libovolné číslo z daného intrevalu vybíráme s co nejkratší délkou, v tomto případě
+je kód zprávy $0.43$.
+
+\paragraph{}
+Pro kratší kódy chceme, aby se vybíraly co nejdelší subintervaly. Pak zůstane 
+délka intervalu velká a nebudeme potřebovat tolik číslic k zapsání výsledného čísla.
+Proto je důležité mít správně zmapované pravděpodobnosti znaků, více frekventované
+znaky získají širší interval a tím pádem dochází ke kompresi. Kdyby měl program
+k~dispozici informaci, že všechny znaky jsou stejně pravděpodobné, nedošlo by k žádné
+změně velikosti po zakódování (otestováno).
+
+\section{Implementace}
+\section{Závěr}
+\end{document}

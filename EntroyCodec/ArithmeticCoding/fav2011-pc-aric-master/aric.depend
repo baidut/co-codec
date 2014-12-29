@@ -1,0 +1,66 @@
+# depslib dependency file v1.0
+1395840808 source:e:\github\co-codec\aric\arithcodec.cpp
+	<iostream>
+	<fstream>
+	"ArithCodec.h"
+
+1419756771 e:\github\co-codec\aric\arithcodec.h
+	<iostream>
+	<fstream>
+	"Parameter.h"
+	"ModelArith.h"
+
+1395840808 e:\github\co-codec\aric\parameter.h
+
+1395839434 e:\github\co-codec\aric\modelarith.h
+	<iostream>
+	<fstream>
+	"Parameter.h"
+
+1395840808 source:e:\github\co-codec\aric\huffcodec.cpp
+	<iostream>
+	<fstream>
+	"HuffCodec.h"
+
+1419756800 e:\github\co-codec\aric\huffcodec.h
+	<iostream>
+	<fstream>
+	"Parameter.h"
+	"ModelHuff.h"
+
+1395840808 e:\github\co-codec\aric\modelhuff.h
+	<iostream>
+	<fstream>
+	"Parameter.h"
+
+1419769108 source:e:\github\co-codec\arithmeticcoding\fav2011-pc-aric-master\coder.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stddef.h>
+	<stdint.h>
+	<assert.h>
+	"coder.h"
+	"header.h"
+
+1419769108 e:\github\co-codec\arithmeticcoding\fav2011-pc-aric-master\coder.h
+	<stdint.h>
+
+1419769108 e:\github\co-codec\arithmeticcoding\fav2011-pc-aric-master\header.h
+	<stdint.h>
+
+1419769108 source:e:\github\co-codec\arithmeticcoding\fav2011-pc-aric-master\header.c
+	<stdio.h>
+	<string.h>
+	<assert.h>
+	"header.h"
+	"coder.h"
+
+1419769108 source:e:\github\co-codec\arithmeticcoding\fav2011-pc-aric-master\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	<time.h>
+	"coder.h"
+

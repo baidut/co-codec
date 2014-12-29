@@ -1,0 +1,80 @@
+\mbox{} \\
+
+\psset{unit=1mm}
+\begin{pspicture}(150, 30)
+	% first line
+	\thicklines
+	\put(0,   30){\line(1, 0){150}}   % main line
+	\put(0,   28){\line(0, 1){4}}     % label 0
+	\put(150, 28){\line(0, 1){4}}     % label 1
+	\thinlines
+	\put(-1,  24){$0$}
+	\put(149, 24){$1$}
+
+	\put(45,  29){\line(0, 1){2}}
+	\put(120, 29){\line(0, 1){2}}
+
+	\put(22,  33){$A$}
+	\put(82,  33){$B$}
+	\put(135, 33){$C$}
+
+	% dotted lines
+	\psline[linestyle=dotted](0, 30)(45, 15)
+	\psline[linestyle=dotted](150, 30)(120, 15)
+
+
+	% second line
+	\put(0,    15){\line(1, 0){150}}   % main line
+	\put(0,   13){\line(0, 1){4}}     % label 0
+	\put(150, 13){\line(0, 1){4}}     % label 1
+	\put(-1,  9){$0$}
+	\put(149, 9){$1$}
+
+	\put(67, 14){\line(0, 1){2}}
+	\put(105,14){\line(0, 1){2}}
+	\thicklines
+	\put(45, 15){\line(1, 0){75}}
+	\put(45, 14){\line(0, 1){2}}
+	\put(120,14){\line(0, 1){2}}
+	\thinlines
+
+	\put(53,  18){\small $BA$}
+	\put(83,  18){\small $BB$}
+	\put(110, 18){\small $BC$}
+
+	% dotted lines
+	\psline[linestyle=dotted](45, 15)(63, 0)
+	\psline[linestyle=dotted](120, 15)(67, 0)
+
+	% third line
+	\put(0,    0){\line(1, 0){150}}   % main line
+	\put(0,   -2){\line(0, 1){4}}     % label 0
+	\put(150, -2){\line(0, 1){4}}     % label 1
+	\put(-1,   -6){$0$}
+	\put(149,  -6){$1$}
+
+	\put(45, -1){\line(0, 1){2}}
+	\put(120,-1){\line(0, 1){2}}
+
+	\put(67, -1){\line(0, 1){2}}
+	\put(105,-1){\line(0, 1){2}}
+
+	\put(51,-1){\line(0, 1){2}}
+	\thicklines
+	\put(63, 0){\line(1, 0){4}}
+	\put(63,-1){\line(0, 1){2}}
+	\put(67, -1){\line(0, 1){2}}
+	\thinlines
+
+	\put(45,  2){\tiny $BAA$}
+	\put(52,  2){\tiny $BAB$}
+	\put(62,  2){\tiny $BAC$}
+
+	% encoded number line
+	\thicklines
+	\put(64.5, -5){\line(0, 1){6}}
+	\put(64.5, 5){\line(0, 1){28}}
+	\thinlines
+
+	\put(61, -9){$0.43$}
+\end{pspicture}
