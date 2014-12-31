@@ -1,10 +1,10 @@
 
- entropyCodec
- ============
+entropyCodec
+============
 
- 	FSE, arithmetic coding program included.
+FSE, arithmetic coding program included.
 
- imageCompression
- ================
+imageCompression
+================
 
-	libjpeg included.
+libjpeg included.
