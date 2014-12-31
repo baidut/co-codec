@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="libjpeg" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/libjpeg" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="E:/github/co-codec/imageCompression/libjpeg-master/" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/libjpeg" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="autoconfig.h" />
+		<Unit filename="cmd/main.cpp" />
+		<Unit filename="cmd/main.hpp" />
+		<Unit filename="codestream/aclosslessscan.cpp" />
+		<Unit filename="codestream/aclosslessscan.hpp" />
+		<Unit filename="codestream/acrefinementscan.cpp" />
+		<Unit filename="codestream/acrefinementscan.hpp" />
+		<Unit filename="codestream/acsequentialscan.cpp" />
+		<Unit filename="codestream/acsequentialscan.hpp" />
+		<Unit filename="codestream/decoder.cpp" />
+		<Unit filename="codestream/decoder.hpp" />
+		<Unit filename="codestream/encoder.cpp" />
+		<Unit filename="codestream/encoder.hpp" />
+		<Unit filename="codestream/entropyparser.cpp" />
+		<Unit filename="codestream/entropyparser.hpp" />
+		<Unit filename="codestream/hiddenrefinementscan.cpp" />
+		<Unit filename="codestream/hiddenrefinementscan.hpp" />
+		<Unit filename="codestream/image.cpp" />
+		<Unit filename="codestream/image.hpp" />
+		<Unit filename="codestream/jpeglsscan.cpp" />
+		<Unit filename="codestream/jpeglsscan.hpp" />
+		<Unit filename="codestream/lineinterleavedlsscan.cpp" />
+		<Unit filename="codestream/lineinterleavedlsscan.hpp" />
+		<Unit filename="codestream/losslessscan.cpp" />
+		<Unit filename="codestream/losslessscan.hpp" />
+		<Unit filename="codestream/predictivescan.cpp" />
+		<Unit filename="codestream/predictivescan.hpp" />
+		<Unit filename="codestream/rectanglerequest.cpp" />
+		<Unit filename="codestream/rectanglerequest.hpp" />
+		<Unit filename="codestream/refinementscan.cpp" />
+		<Unit filename="codestream/refinementscan.hpp" />
+		<Unit filename="codestream/sampleinterleavedlsscan.cpp" />
+		<Unit filename="codestream/sampleinterleavedlsscan.hpp" />
+		<Unit filename="codestream/sequentialscan.cpp" />
+		<Unit filename="codestream/sequentialscan.hpp" />
+		<Unit filename="codestream/singlecomponentlsscan.cpp" />
+		<Unit filename="codestream/singlecomponentlsscan.hpp" />
+		<Unit filename="codestream/tables.cpp" />
+		<Unit filename="codestream/tables.hpp" />
+		<Unit filename="codestream/vesadctscan.cpp" />
+		<Unit filename="codestream/vesadctscan.hpp" />
+		<Unit filename="codestream/vesascan.cpp" />
+		<Unit filename="codestream/vesascan.hpp" />
+		<Unit filename="coding/actemplate.cpp" />
+		<Unit filename="coding/actemplate.hpp" />
+		<Unit filename="coding/arithmetictemplate.cpp" />
+		<Unit filename="coding/arithmetictemplate.hpp" />
+		<Unit filename="coding/arthdeco.cpp" />
+		<Unit filename="coding/arthdeco.hpp" />
+		<Unit filename="coding/blockrow.cpp" />
+		<Unit filename="coding/blockrow.hpp" />
+		<Unit filename="coding/decodertemplate.cpp" />
+		<Unit filename="coding/decodertemplate.hpp" />
+		<Unit filename="coding/huffmancoder.cpp" />
+		<Unit filename="coding/huffmancoder.hpp" />
+		<Unit filename="coding/huffmandecoder.cpp" />
+		<Unit filename="coding/huffmandecoder.hpp" />
+		<Unit filename="coding/huffmanstatistics.cpp" />
+		<Unit filename="coding/huffmanstatistics.hpp" />
+		<Unit filename="coding/huffmantemplate.cpp" />
+		<Unit filename="coding/huffmantemplate.hpp" />
+		<Unit filename="coding/qmcoder.cpp" />
+		<Unit filename="coding/qmcoder.hpp" />
+		<Unit filename="coding/quantizedrow.cpp" />
+		<Unit filename="coding/quantizedrow.hpp" />
+		<Unit filename="colortrafo/colortrafo.cpp" />
+		<Unit filename="colortrafo/colortrafo.hpp" />
+		<Unit filename="colortrafo/lslosslesstrafo.cpp" />
+		<Unit filename="colortrafo/lslosslesstrafo.hpp" />
+		<Unit filename="colortrafo/rcttrafo.cpp" />
+		<Unit filename="colortrafo/rcttrafo.hpp" />
+		<Unit filename="colortrafo/trivialtrafo.cpp" />
+		<Unit filename="colortrafo/trivialtrafo.hpp" />
+		<Unit filename="colortrafo/ycbcrtrafo.cpp" />
+		<Unit filename="colortrafo/ycbcrtrafo.hpp" />
+		<Unit filename="config.h" />
+		<Unit filename="control/bitmapctrl.cpp" />
+		<Unit filename="control/bitmapctrl.hpp" />
+		<Unit filename="control/blockbitmaprequester.cpp" />
+		<Unit filename="control/blockbitmaprequester.hpp" />
+		<Unit filename="control/blockbuffer.cpp" />
+		<Unit filename="control/blockbuffer.hpp" />
+		<Unit filename="control/blocklineadapter.cpp" />
+		<Unit filename="control/blocklineadapter.hpp" />
+		<Unit filename="control/bufferctrl.cpp" />
+		<Unit filename="control/bufferctrl.hpp" />
+		<Unit filename="control/hierarchicalbitmaprequester.cpp" />
+		<Unit filename="control/hierarchicalbitmaprequester.hpp" />
+		<Unit filename="control/lineadapter.cpp" />
+		<Unit filename="control/lineadapter.hpp" />
+		<Unit filename="control/linebitmaprequester.cpp" />
+		<Unit filename="control/linebitmaprequester.hpp" />
+		<Unit filename="control/linebuffer.cpp" />
+		<Unit filename="control/linebuffer.hpp" />
+		<Unit filename="control/linelineadapter.cpp" />
+		<Unit filename="control/linelineadapter.hpp" />
+		<Unit filename="control/linemerger.cpp" />
+		<Unit filename="control/linemerger.hpp" />
+		<Unit filename="control/residualblockhelper.cpp" />
+		<Unit filename="control/residualblockhelper.hpp" />
+		<Unit filename="ctrafo/YCbCr444ToRGB.cpp" />
+		<Unit filename="ctrafo/YCbCr444ToRGB.hpp" />
+		<Unit filename="dct/dct.cpp" />
+		<Unit filename="dct/dct.hpp" />
+		<Unit filename="dct/hadamard.cpp" />
+		<Unit filename="dct/hadamard.hpp" />
+		<Unit filename="dct/idct.cpp" />
+		<Unit filename="dct/idct.hpp" />
+		<Unit filename="dct/sermsdct.cpp" />
+		<Unit filename="dct/sermsdct.hpp" />
+		<Unit filename="interface/bitmaphook.cpp" />
+		<Unit filename="interface/bitmaphook.hpp" />
+		<Unit filename="interface/hooks.cpp" />
+		<Unit filename="interface/hooks.hpp" />
+		<Unit filename="interface/imagebitmap.cpp" />
+		<Unit filename="interface/imagebitmap.hpp" />
+		<Unit filename="interface/jpeg.cpp" />
+		<Unit filename="interface/jpeg.hpp" />
+		<Unit filename="interface/jpgtypes.cpp" />
+		<Unit filename="interface/jpgtypes.hpp" />
+		<Unit filename="interface/parameters.cpp" />
+		<Unit filename="interface/parameters.hpp" />
+		<Unit filename="interface/tagitem.cpp" />
+		<Unit filename="interface/tagitem.hpp" />
+		<Unit filename="interface/types.cpp" />
+		<Unit filename="interface/types.hpp" />
+		<Unit filename="io/bitstream.cpp" />
+		<Unit filename="io/bitstream.hpp" />
+		<Unit filename="io/bytestream.cpp" />
+		<Unit filename="io/bytestream.hpp" />
+		<Unit filename="io/iostream.cpp" />
+		<Unit filename="io/iostream.hpp" />
+		<Unit filename="io/memorystream.cpp" />
+		<Unit filename="io/memorystream.hpp" />
+		<Unit filename="io/randomaccessstream.cpp" />
+		<Unit filename="io/randomaccessstream.hpp" />
+		<Unit filename="io/staticstream.cpp" />
+		<Unit filename="io/staticstream.hpp" />
+		<Unit filename="marker/actable.cpp" />
+		<Unit filename="marker/actable.hpp" />
+		<Unit filename="marker/adobemarker.cpp" />
+		<Unit filename="marker/adobemarker.hpp" />
+		<Unit filename="marker/component.cpp" />
+		<Unit filename="marker/component.hpp" />
+		<Unit filename="marker/exifmarker.cpp" />
+		<Unit filename="marker/exifmarker.hpp" />
+		<Unit filename="marker/frame.cpp" />
+		<Unit filename="marker/frame.hpp" />
+		<Unit filename="marker/huffmantable.cpp" />
+		<Unit filename="marker/huffmantable.hpp" />
+		<Unit filename="marker/jfifmarker.cpp" />
+		<Unit filename="marker/jfifmarker.hpp" />
+		<Unit filename="marker/losslessmarker.cpp" />
+		<Unit filename="marker/losslessmarker.hpp" />
+		<Unit filename="marker/lscolortrafo.cpp" />
+		<Unit filename="marker/lscolortrafo.hpp" />
+		<Unit filename="marker/quantization.cpp" />
+		<Unit filename="marker/quantization.hpp" />
+		<Unit filename="marker/residualmarker.cpp" />
+		<Unit filename="marker/residualmarker.hpp" />
+		<Unit filename="marker/residualspecsmarker.cpp" />
+		<Unit filename="marker/residualspecsmarker.hpp" />
+		<Unit filename="marker/restartintervalmarker.cpp" />
+		<Unit filename="marker/restartintervalmarker.hpp" />
+		<Unit filename="marker/scan.cpp" />
+		<Unit filename="marker/scan.hpp" />
+		<Unit filename="marker/scantypes.cpp" />
+		<Unit filename="marker/scantypes.hpp" />
+		<Unit filename="marker/thresholds.cpp" />
+		<Unit filename="marker/thresholds.hpp" />
+		<Unit filename="marker/tonemappingmarker.cpp" />
+		<Unit filename="marker/tonemappingmarker.hpp" />
+		<Unit filename="std/assert.cpp" />
+		<Unit filename="std/assert.hpp" />
+		<Unit filename="std/ctype.cpp" />
+		<Unit filename="std/ctype.hpp" />
+		<Unit filename="std/errno.cpp" />
+		<Unit filename="std/errno.hpp" />
+		<Unit filename="std/math.cpp" />
+		<Unit filename="std/math.hpp" />
+		<Unit filename="std/setjmp.cpp" />
+		<Unit filename="std/setjmp.hpp" />
+		<Unit filename="std/stdarg.cpp" />
+		<Unit filename="std/stdarg.hpp" />
+		<Unit filename="std/stddef.cpp" />
+		<Unit filename="std/stddef.hpp" />
+		<Unit filename="std/stdio.cpp" />
+		<Unit filename="std/stdio.hpp" />
+		<Unit filename="std/stdlib.cpp" />
+		<Unit filename="std/stdlib.hpp" />
+		<Unit filename="std/string.cpp" />
+		<Unit filename="std/string.hpp" />
+		<Unit filename="std/unistd.cpp" />
+		<Unit filename="std/unistd.hpp" />
+		<Unit filename="tools/debug.cpp" />
+		<Unit filename="tools/debug.hpp" />
+		<Unit filename="tools/environment.cpp" />
+		<Unit filename="tools/environment.hpp" />
+		<Unit filename="tools/line.cpp" />
+		<Unit filename="tools/line.hpp" />
+		<Unit filename="tools/rectangle.cpp" />
+		<Unit filename="tools/rectangle.hpp" />
+		<Unit filename="tools/traits.cpp" />
+		<Unit filename="tools/traits.hpp" />
+		<Unit filename="upsampling/downsampler.cpp" />
+		<Unit filename="upsampling/downsampler.hpp" />
+		<Unit filename="upsampling/downsamplerbase.cpp" />
+		<Unit filename="upsampling/downsamplerbase.hpp" />
+		<Unit filename="upsampling/upsampler.cpp" />
+		<Unit filename="upsampling/upsampler.hpp" />
+		<Unit filename="upsampling/upsamplerbase.cpp" />
+		<Unit filename="upsampling/upsamplerbase.hpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
