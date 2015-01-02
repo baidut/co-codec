@@ -173,6 +173,9 @@ scan->WriteMCU() return m_pParser->WriteMCU();
 m_pScan->Flush() m_pParser->Flush(true);
 成员的相关方法需要实现
 class EntropyParser   *m_pParser;
+通过看一个最简单的parser的实现了解如何对ANS进行封装
+
+需要先对基类parser进行了解
 
 /*************************************************************************
 ** Copyright (c) 2011-2012 Accusoft                                     **
@@ -248,116 +251,12 @@ class BitmaCtrl;
 class Scan;
 ///
 
-/// class LosslessScan
-// Represents the lossless scan - lines are coded directly with predictive
-// coding, though here residuals are encoded with the arithmetic encoder.
-class ACLosslessScan : public PredictiveScan {
-  //
-  // The class used for pulling and pushing data.
-  class LineBuffer          *m_pLineCtrl;
-  //
-  // Small DC threshold value ('L' in the standard)
-  UBYTE                      m_ucSmall[4];
-  //
-  // Large DC threshold value ('U' in the specs)
-  UBYTE                      m_ucLarge[4];
-  //
-  // The context index to use.
-  UBYTE                      m_ucContext[4];
-  //
-  // Differentials from the above and left, used
-  // for prediction.
-  LONG                      *m_plDa[4];
-  LONG                      *m_plDb[4];
-  //
+/// class ANSScan
+// C++ fse wrappers
+class ANSScan : public EntropyParser {
+  
   // The real worker class.
   class QMCoder              m_Coder;
-  //
-  // Context information.
-  struct QMContextSet {
-    //
-    // The Zero-Sign coding contexts - this is a 5x5 set.
-    struct ContextZeroSet {
-      QMContext S0,SS,SP,SN;
-      //
-      void Init(void)
-      {
-  S0.Init();
-  SS.Init();
-  SP.Init();
-  SN.Init();
-      }
-    } SignZeroCoding[5][5];
-    //
-    // The Magnitude/refinement coding contexts.
-    struct MagnitudeSet {
-      QMContext X[15];
-      QMContext M[15];
-      //
-      void Init(void)
-      {
-  for(int i = 0;i < 15;i++) {
-    X[i].Init();
-    M[i].Init();
-  }
-      }
-    } MagnitudeLow,MagnitudeHigh;
-    //
-    void Init(void)
-    {
-      for(int i = 0;i <5;i++) {
-  for(int j = 0;j < 5;j++) {
-    SignZeroCoding[i][j].Init();
-  }
-      }
-      MagnitudeLow.Init();
-      MagnitudeHigh.Init();
-    }
-    //
-    // Classify and return the sign/zero coding context to encode the difference in.
-    // Requires the differences in both directions.
-    struct ContextZeroSet &ClassifySignZero(LONG Da,LONG Db,UBYTE l,UBYTE u)
-    {
-      return SignZeroCoding[Classify(Da,l,u) + 2][Classify(Db,l,u) + 2];
-    }
-    //
-    // Classify the Magnitude context 
-    struct MagnitudeSet &ClassifyMagnitude(LONG Db,UBYTE u)
-    {
-      if (Db > (1 << u) || -Db > (1 << u)) {
-  return MagnitudeHigh;
-      } else {
-  return MagnitudeLow;
-      }
-    }
-    //
-    // Classifier in one direction.
-    static int Classify(LONG diff,UBYTE l,UBYTE u)
-    {
-      LONG abs = (diff > 0)?(diff):(-diff);
-  
-      if (abs <= ((1 << l) >> 1)) {
-  // the zero cathegory.
-  return 0;
-      }
-      if (abs <= (1 << u)) {
-  if (diff < 0) {
-    return -1;
-  } else {
-    return 1;
-  }
-      }
-      if (diff < 0) {
-  return -2;
-      } else {
-  return 2;
-      }
-    }
-    //
-  } m_Context[4];
-  //
-  // Common setup for encoding and decoding.
-  void FindComponentDimensions(void);
   //
   // This is actually the true MCU-parser, not the interface that reads
   // a full line.

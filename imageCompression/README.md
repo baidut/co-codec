@@ -1,5 +1,19 @@
+
+jpeg-6b
+=======
+
+written in C
+
+	libjpeg is a widely used free library with functions for handling the image data format JPEG. It implements a JPEG codec (encoding and decoding) alongside various utilities for handling JPEG data. It is written in C and distributed as free software together with its source code under the terms of a custom permissive (BSD-like) free software license, which basically demands attribution. The original variant is maintained and published by the Independent JPEG Group (IJG). Meanwhile, there are several mostly compatible forks with additional features like for example increased coding efficiency.
+	——from [wikipedia libjpeg](http://en.wikipedia.org/wiki/Libjpeg)
+
+from http://libjpeg.sourceforge.net/
+
+
 libjpeg-master
 ==============
+
+written in C++
 
 from https://github.com/thorfdbg/libjpeg
 
@@ -10,3 +24,16 @@ how to install
  1. `./configure`
  1. `make`
  1. `make install`
+
+
+libjpeg-turbo
+==============
+
+it's famous!
+
+SIMD-accelerated libjpeg-compatible JPEG codec library
+
+related links
+ * http://libjpeg-turbo.virtualgl.org/
+ * [An optimized libjpeg replacement](https://launchpad.net/libjpeg-turbo)
+ * http://www.freedesktop.org/wiki/Software/libjpeg/
