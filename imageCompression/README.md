@@ -1,8 +1,19 @@
 
+libjpeg is a popular library supporting the JPEG image compression.
+
+Important notice: you can now choose between two alternative implementations:
+ * libjpeg is the standard, plain library
+ * libjpeg-turbo is a new library, that fully takes profit from the most recent Intel/AMD CPUs
+If you are planning to deploy your software on such platforms, then using libjpeg-turbo can ensure a 200% performance boost (and even more than this).
+I strongly recommend using libjpeg-turbo: both libraries share the same identical API/ABI (they are absolutely inter-changeable), but libjpeg-turbo runs in an impressively faster mode.
+
 jpeg-6b & jpeg-9a 
 =================
 
-written in C, 
+written in C, author:Tom Lane, Guido Vollbeding, Philip Gladstone,
+Bill Allombert, Jim Boucher, Lee Crocker, Bob Friesenhahn, Ben Jackson,
+Julian Minguillon, Luis Ortiz, George Phillips, Davide Rossi, Ge' Weijers,
+and other members of the Independent JPEG Group
 
  * jpeg-6b : version 6b of 27-Mar-1998, from http://libjpeg.sourceforge.net/
  * jpeg-9a : version is release 9a of 19-Jan-2014, from [IJG](http://www.ijg.org/)
@@ -12,10 +23,15 @@ written in C,
 
  > [IJG(Independent JPEG Group)](http://www.ijg.org/) is an informal group that writes and distributes a widely used free library for JPEG image compression. 
 
+ related links
+ * http://www.freedesktop.org/wiki/Software/libjpeg/
+ * http://www.infai.org/jpeg/
+ 
+
 libjpeg-master
 ==============
 
-written in C++
+written in C++, author:Thomas Richter
 
 from https://github.com/thorfdbg/libjpeg
 

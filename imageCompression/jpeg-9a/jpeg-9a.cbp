@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="jpeg-9a" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/jpeg-9a" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/jpeg-9a" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="cderror.h" />
+		<Unit filename="cdjpeg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="cdjpeg.h" />
+		<Unit filename="cjpeg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ckconfig.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jaricom.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jcapimin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jcapistd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jcarith.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jccoefct.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jccolor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jcdctmgr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jchuff.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jcinit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jcmainct.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jcmarker.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jcmaster.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jcomapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jcparam.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jcprepct.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jcsample.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jctrans.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdapimin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdapistd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdarith.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdatadst.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdatasrc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdcoefct.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdcolor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdct.h" />
+		<Unit filename="jddctmgr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdhuff.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdinput.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdmainct.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdmarker.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdmaster.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdmerge.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdpostct.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdsample.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jdtrans.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jerror.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jerror.h" />
+		<Unit filename="jfdctflt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jfdctfst.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jfdctint.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jidctflt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jidctfst.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jidctint.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jmemansi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jmemdos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jmemmac.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jmemmgr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jmemname.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jmemnobs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jmemsys.h" />
+		<Unit filename="jmorecfg.h" />
+		<Unit filename="jpegint.h" />
+		<Unit filename="jpeglib.h" />
+		<Unit filename="jpegtran.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jquant1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jquant2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jutils.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jversion.h" />
+		<Unit filename="rdbmp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rdcolmap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rdgif.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rdjpgcom.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rdppm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rdrle.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rdswitch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rdtarga.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="transupp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="transupp.h" />
+		<Unit filename="wrbmp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="wrgif.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="wrjpgcom.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="wrppm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="wrrle.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

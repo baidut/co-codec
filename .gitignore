@@ -168,3 +168,10 @@ pip-log.txt
 ##################
 ignore
 gitignore
+*.lo
+*.o
+*.la
+*.Po
+.libs
+.deps
+*.exe
