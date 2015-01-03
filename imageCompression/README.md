@@ -1,3 +1,23 @@
+JPEG2000 Standard implementation
+================================
+
+Jasper
+------
+
+Stripped Jasper from https://github.com/vmarkovtsev/jasper ,for original Jasper, go to https://github.com/smanders/jasper
+[中文介绍-Jasper-JPEG2000的实现(1)](http://blog.csdn.net/windcsn/article/details/556834) 此博客还有更多相关的资料
+
+OpenJPEG
+--------
+
+> OpenJPEG is an open-source library to encode and decode JPEG 2000 images. As of version 2.1 released in April 2014, it is officially conformant with the JPEG 2000 Part-1 standard. -- from [wikipedia/OpenJPEG](http://en.wikipedia.org/wiki/OpenJPEG)
+
+[OpenJPEG homepage](http://www.openjpeg.org/)
+
+TortoiseSVN：一个非svn文件夹下右键svn->checkout, 输入网址http://openjpeg.googlecode.com/svn/trunk/ openjpeg-read-only 下载不下来的话可以考虑下载gihtub上的镜像文件https://github.com/OpenJPEG/openjpeg
+
+JPEG Standard implementation
+============================
 
 libjpeg is a popular library supporting the JPEG image compression.
 
@@ -8,7 +28,7 @@ If you are planning to deploy your software on such platforms, then using libjpe
 I strongly recommend using libjpeg-turbo: both libraries share the same identical API/ABI (they are absolutely inter-changeable), but libjpeg-turbo runs in an impressively faster mode.
 
 jpeg-6b & jpeg-9a 
-=================
+-----------------
 
 written in C, author:Tom Lane, Guido Vollbeding, Philip Gladstone,
 Bill Allombert, Jim Boucher, Lee Crocker, Bob Friesenhahn, Ben Jackson,
@@ -29,15 +49,13 @@ and other members of the Independent JPEG Group
  
 
 libjpeg-master
-==============
+--------------
 
 written in C++, author:Thomas Richter
 
 from https://github.com/thorfdbg/libjpeg
 
 how to install
---------------
-
  1. install g++ & autoconf `sudo apt-get install g++` `sudo apt-get install autoconf`
  1. `./configure`
  1. `make`
@@ -45,7 +63,7 @@ how to install
 
 
 libjpeg-turbo
-==============
+--------------
 
 it's famous!
 

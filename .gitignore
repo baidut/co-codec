@@ -175,3 +175,4 @@ gitignore
 .libs
 .deps
 *.exe
+openjp2
