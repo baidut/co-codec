@@ -14,3 +14,4 @@ add_library(jasper STATIC ${jasper_base_sources} ${jasper_headers}
   ${jasper_jp2_sources} ${jasper_jp2_headers}
   ${jasper_jpc_sources} ${jasper_jpc_headers})
 set_target_properties(jasper PROPERTIES COMPILE_FLAGS "-fPIC -Wall -Wformat-security -fstack-protector -g -O2 -march=native -ftree-vectorize")
+set(CMAKE_C_COMPILER "D:/Qt/Qt5.2.1/Tools/mingw48_32") #add Yingzhenqiang

@@ -5,6 +5,7 @@ Jasper
 ------
 
 Stripped Jasper from https://github.com/vmarkovtsev/jasper ,for original Jasper, go to https://github.com/smanders/jasper
+
 [中文介绍-Jasper-JPEG2000的实现(1)](http://blog.csdn.net/windcsn/article/details/556834) 此博客还有更多相关的资料
 
 OpenJPEG
