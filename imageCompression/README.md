@@ -4,6 +4,8 @@ JPEG2000 Standard implementation
 Jasper
 ------
 
+Jasper IS NOT JasperReports！
+
 Stripped Jasper from https://github.com/vmarkovtsev/jasper ,for original Jasper, go to https://github.com/smanders/jasper
 
 [中文介绍-Jasper-JPEG2000的实现(1)](http://blog.csdn.net/windcsn/article/details/556834) 此博客还有更多相关的资料
@@ -52,9 +54,10 @@ and other members of the Independent JPEG Group
 libjpeg-master
 --------------
 
-written in C++, author:Thomas Richter
+written in C++, author:[Thomas Richter](https://www.researchgate.net/researcher/70636586_Thomas_Richter),from https://github.com/thorfdbg/libjpeg
 
-from https://github.com/thorfdbg/libjpeg
+> [jpeg-ls](http://www.libjpeg-turbo.org/About/SmartScale-Lossless)
+For comparison, Thomas Richter's JPEG-LS implementation, hereafter referred to as "jpeg-ls", was used to compress the source images into the JPEG-LS format. 
 
 how to install
  1. install g++ & autoconf `sudo apt-get install g++` `sudo apt-get install autoconf`
@@ -76,3 +79,10 @@ related links
  * http://libjpeg-turbo.virtualgl.org/
  * [An optimized libjpeg replacement](https://launchpad.net/libjpeg-turbo)
  * http://www.freedesktop.org/wiki/Software/libjpeg/
+ * [download libjpeg-turbo](http://sourceforge.net/projects/libjpeg-turbo/) 
+
+
+OTHERS
+======
+
+[matlab implementation](http://www.mathworks.com/matlabcentral/fileexchange/10476-jpeg-codec)

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="jasper-master" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/jasper-master" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DEXCLUDE_MIF_SUPPORT" />
+					<Add option="-DEXCLUDE_PNM_SUPPORT" />
+					<Add option="-DEXCLUDE_BMP_SUPPORT" />
+					<Add option="-DEXCLUDE_RAS_SUPPORT" />
+					<Add option="-DEXCLUDE_JP2_SUPPORT" />
+					<Add option="-DEXCLUDE_JPG_SUPPORT" />
+					<Add option="-DEXCLUDE_PGX_SUPPORT" />
+					<Add directory="E:/github/co-codec/imageCompression/jasper-master/base/" />
+					<Add directory="E:/github/co-codec/imageCompression/jasper-master/include/jasper/" />
+					<Add directory="E:/github/co-codec/imageCompression/jasper-master/jp2/" />
+					<Add directory="E:/github/co-codec/imageCompression/jasper-master/jpc/" />
+					<Add directory="E:/github/co-codec/imageCompression/jasper-master/include/" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/jasper-master" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="base/jas_cm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="base/jas_debug.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="base/jas_getopt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="base/jas_icc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="base/jas_iccdata.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="base/jas_image.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="base/jas_init.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="base/jas_malloc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="base/jas_seq.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="base/jas_stream.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="base/jas_string.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="base/jas_tmr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="base/jas_tvp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="base/jas_version.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="include/jasper/jas_cm.h" />
+		<Unit filename="include/jasper/jas_config.h" />
+		<Unit filename="include/jasper/jas_config2.h" />
+		<Unit filename="include/jasper/jas_debug.h" />
+		<Unit filename="include/jasper/jas_fix.h" />
+		<Unit filename="include/jasper/jas_getopt.h" />
+		<Unit filename="include/jasper/jas_icc.h" />
+		<Unit filename="include/jasper/jas_image.h" />
+		<Unit filename="include/jasper/jas_init.h" />
+		<Unit filename="include/jasper/jas_malloc.h" />
+		<Unit filename="include/jasper/jas_math.h" />
+		<Unit filename="include/jasper/jas_seq.h" />
+		<Unit filename="include/jasper/jas_stream.h" />
+		<Unit filename="include/jasper/jas_string.h" />
+		<Unit filename="include/jasper/jas_tmr.h" />
+		<Unit filename="include/jasper/jas_tvp.h" />
+		<Unit filename="include/jasper/jas_types.h" />
+		<Unit filename="include/jasper/jas_version.h" />
+		<Unit filename="include/jasper/jasper.h" />
+		<Unit filename="jasper.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jp2/jp2_cod.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jp2/jp2_cod.h" />
+		<Unit filename="jp2/jp2_dec.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jp2/jp2_dec.h" />
+		<Unit filename="jp2/jp2_enc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_bs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_bs.h" />
+		<Unit filename="jpc/jpc_cod.h" />
+		<Unit filename="jpc/jpc_cs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_cs.h" />
+		<Unit filename="jpc/jpc_dec.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_dec.h" />
+		<Unit filename="jpc/jpc_enc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_enc.h" />
+		<Unit filename="jpc/jpc_fix.h" />
+		<Unit filename="jpc/jpc_flt.h" />
+		<Unit filename="jpc/jpc_math.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_math.h" />
+		<Unit filename="jpc/jpc_mct.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_mct.h" />
+		<Unit filename="jpc/jpc_mqcod.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_mqcod.h" />
+		<Unit filename="jpc/jpc_mqdec.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_mqdec.h" />
+		<Unit filename="jpc/jpc_mqenc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_mqenc.h" />
+		<Unit filename="jpc/jpc_qmfb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_qmfb.h" />
+		<Unit filename="jpc/jpc_t1cod.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_t1cod.h" />
+		<Unit filename="jpc/jpc_t1dec.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_t1dec.h" />
+		<Unit filename="jpc/jpc_t1enc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_t1enc.h" />
+		<Unit filename="jpc/jpc_t2cod.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_t2cod.h" />
+		<Unit filename="jpc/jpc_t2dec.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_t2dec.h" />
+		<Unit filename="jpc/jpc_t2enc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_t2enc.h" />
+		<Unit filename="jpc/jpc_tagtree.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_tagtree.h" />
+		<Unit filename="jpc/jpc_tsfb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_tsfb.h" />
+		<Unit filename="jpc/jpc_util.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jpc/jpc_util.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
