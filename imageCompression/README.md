@@ -91,3 +91,5 @@ matlab implementation
 ---------------------
 
 * [rubychilds/JPEGCompression](https://github.com/rubychilds/JPEGCompression)
+* [JPEG Encoder Decoder -by Muhammad Anwarul Azim](http://cn.mathworks.com/matlabcentral/fileexchange/15335-jpeg-encoder-decoder)
+* [用MATLAB实现JPEG压缩过程](http://blog.sina.com.cn/s/blog_a98e39a20101507s.html)
