@@ -1,4 +1,12 @@
 
+% 数据压缩程序对比综合评测主要分为：
+
+% 对不同大小的文件的压缩性能
+% 对不同概率生成的二进制文件的压缩性能
+
+% 单个程序对单个文件的压缩性能评测： 压缩率，压缩速度，解压速度
+
+
 function [ratio,enc_speed,dec_speed] = entropy_codec_benchmark(enc_cmd_format,dec_cmd_format,in_file,enc_file,dec_file)
 % measure the performance of specific entropyCodec program
 
