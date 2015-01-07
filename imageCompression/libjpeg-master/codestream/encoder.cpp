@@ -114,7 +114,7 @@ class Image *Encoder::CreateDefaultImage(ULONG width,ULONG height,UBYTE depth,UB
 
   if (depth > 256)
     JPG_THROW(OVERFLOW_PARAMETER,"Encoder::CreateImage","image depth can be at most 256");
-  
+
   if (precision < 1 || precision > 16)
     JPG_THROW(OVERFLOW_PARAMETER,"Encoder::CreateImage","image precision must be between 1 and 16");
 
@@ -153,12 +153,10 @@ class Image *Encoder::CreateDefaultImage(ULONG width,ULONG height,UBYTE depth,UB
 	    scantype = JPEG_LS;
 	    break; // Could enable AC coding, maybe? In future revisions.
 	  default:
-  	
-  	default:
     JPG_THROW(INVALID_PARAMETER,"Encoder::CreateImage","specified invalid frame type");
   	}
   }
-  
+
   if (maxerror > 255)
     JPG_THROW(OVERFLOW_PARAMETER,"Encoder::WriteHeader","the maximum error must be between 0 and 255");
 
@@ -188,7 +186,7 @@ class Image *Encoder::CreateDefaultImage(ULONG width,ULONG height,UBYTE depth,UB
       break;
     }
   }
-  
+
   // Do not indicate baseline here, though it may...
   m_pImage  = new(m_pEnviron) class Image(m_pTables);
   m_pImage->InstallDefaultParameters(width,height,depth,
