@@ -5,7 +5,7 @@
 % You can also try preserving the 8 largest coefficients (out of the total of 8x8=64), and simply rounding them to the closest integer.
 % Visualize the results.
 
-result = jpeg_compression(image_path, qf)
+function result =  JPEGcompression(image_path, qf)
 
     % reads image path and ensures anything outside of 0-255 is bound
     I = uint8(imread(image_path));
@@ -70,11 +70,11 @@ result = jpeg_compression(image_path, qf)
     idct = @(block_struct) dct_matrix' * @(block_struct) dct_matrix;
 
     % breaks image into 8x8 blocks
-    B = blockproc(I_ded, [8 8], dct).*q_max;
+    B = blockproc(Im_ded, [8 8], dct).*q_max;
     % Quantization through dividing and then rounding
     Xq = blockproc(B, [8 8], @(block_struct) round(round(block_struct.data)./ q_y));
     % Now multiple through
-    Xd = blockproc(Xq,[8 8], @(block_struct)block_struct.data) .*q_y));
+    Xd = blockproc(Xq,[8 8], @(block_struct)block_struct.data.*q_y);
     
     % denormalization
     result = blockproc(Xd ./ q_max, [8 8], idct) + 128;

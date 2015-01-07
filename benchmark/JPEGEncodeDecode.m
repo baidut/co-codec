@@ -1,34 +1,35 @@
 function JPEGEncodeDecode
 %UNTITLED7 Summary of this function goes here
 %   Detailed explanation goes here
- 
-img=imread('bridge.bmp');
-subplot(121);imshow(img);title('原图');          %显示原图
- 
- 
-img_ycbcr = rgb2ycbcr(img);             % rgb->yuv
-[row,col,~]=size(img_ycbcr);       % 取出行列数，~表示3个通道算1列
- 
- 
-%对图像进行扩展
-row_expand=ceil(row/16)*16;        %行数上取整再乘16，及扩展成16的倍数
-if mod(row,16)~=0            %行数不是16的倍数，用最后一行进行扩展
+
+%% 显示原图
+img=imread('img07.bmp');
+subplot(121);imshow(img);title('原图');          
+%% 色彩空间转换（无损）
+img_ycbcr = rgb2ycbcr(img);
+subplot(122);imshow(img_ycbcr);title('色彩空间转换后的图片');
+%% 对图像进行扩展
+[row,col,~]=size(img_ycbcr); % 取出行列数，~表示3个通道算1列
+%行数不是16的倍数，用最后一行进行扩展
+row_expand=ceil(row/16)*16;  %行数上取整再乘16，及扩展成16的倍数
+if mod(row,16)~=0            
     for i=row:row_expand
         img_ycbcr(i,:,:)=img_ycbcr(row,:,:);
     end
 end
+%列数不是16的倍数，用最后一列进行扩展
 col_expand=ceil(col/16)*16;  %列数上取整
-if mod(col,16)~=0         %列数不是16的倍数，用最后一列进行扩展
+if mod(col,16)~=0            
     for j=col:col_expand
         img_ycbcr(:,j,:)=img_ycbcr(:,col,:);
     end
 end
- 
- 
-%对Y,Cb,Cr分量进行4:2:0采样
+% 扩展方式可以修改
+subplot(122);imshow(img_ycbcr);%title('扩展后的图片');
+%% 对Y,Cb,Cr分量进行4:2:0采样
 Y=img_ycbcr(:,:,1);                    %Y分量
-Cb=zeros(row_expand/2,col_expand/2);        %Cb分量
-Cr=zeros(row_expand/2,col_expand/2);        %Cr分量
+Cb=zeros(row_expand/2,col_expand/2);   %Cb分量
+Cr=zeros(row_expand/2,col_expand/2);   %Cr分量
 for i=1:row_expand/2
     for j=1:2:col_expand/2-1          %奇数列
         Cb(i,j)=double(img_ycbcr(i*2-1,j*2-1,2));     
@@ -41,9 +42,6 @@ for i=1:row_expand/2
         Cr(i,j)=double(img_ycbcr(i*2-1,j*2,3));     
     end
 end
- 
- 
- 
 %分别对三种颜色分量进行编码
 Y_Table=[16  11  10  16  24  40  51  61
     12  12  14  19  26  58  60  55
@@ -61,15 +59,14 @@ CbCr_Table=[17, 18, 24, 47, 99, 99, 99, 99;
     99, 99, 99, 99, 99, 99, 99, 99;
     99, 99, 99, 99, 99, 99, 99, 99;
     99, 99, 99, 99, 99, 99, 99, 99];%色差量化表
- 
+
 Qua_Factor=0.5;%量化因子,最小为0.01,最大为255,建议在0.5和3之间,越小质量越好文件越大
  
 %对三个通道分别DCT和量化
 Y_dct_q=Dct_Quantize(Y,Qua_Factor,Y_Table);
 Cb_dct_q=Dct_Quantize(Cb,Qua_Factor,CbCr_Table);
 Cr_dct_q=Dct_Quantize(Cr,Qua_Factor,CbCr_Table);
- 
- 
+%% 解码
 %对三个通道分别反量化和反DCT
 Y_in_q_dct=Inverse_Quantize_Dct(Y_dct_q,Qua_Factor,Y_Table);
 Cb_in_q_dct=Inverse_Quantize_Dct(Cb_dct_q,Qua_Factor,CbCr_Table);
@@ -105,7 +102,7 @@ function [Matrix]=Dct_Quantize(I,Qua_Factor,Qua_Table)
 %   Detailed explanation goes here
 I=double(I)-128;   %层次移动128个灰度级，详见书本P401
  
-%% ?t2变换：把ImageSub分成8*8像素块，分别进行dct2变换，得变换系数矩阵Coef
+%t2变换：把ImageSub分成8*8像素块，分别进行dct2变换，得变换系数矩阵Coef
 I=blkproc(I,[8 8],'dct2(x)');
  
 Qua_Matrix=Qua_Factor.*Qua_Table;              %量化矩阵

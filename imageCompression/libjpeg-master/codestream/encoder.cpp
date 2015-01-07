@@ -124,32 +124,39 @@ class Image *Encoder::CreateDefaultImage(ULONG width,ULONG height,UBYTE depth,UB
   if (restart > MAX_UWORD)
     JPG_THROW(OVERFLOW_PARAMETER,"Encoder::CreateImage","restart interval must be between 0 and 65535");
 
-  switch(frametype & 0x07) {
-  case JPGFLAG_BASELINE:
-    scantype = Baseline;
-    if (accoding)
-      JPG_THROW(INVALID_PARAMETER,"Encoder::CreateImage","baseline coding does not allow arithmetic coding");
-    break;
-  case JPGFLAG_SEQUENTIAL:
-    scantype = Sequential;
-    if (accoding)
-      scantype = ACSequential;
-    break;
-  case JPGFLAG_PROGRESSIVE:
-    scantype = Progressive;
-    if (accoding)
-      scantype = ACProgressive;
-    break;
-  case JPGFLAG_LOSSLESS:
-    scantype = Lossless;
-    if (accoding)
-      scantype = ACLossless;
-    break;
-  case JPGFLAG_JPEG_LS:
-    scantype = JPEG_LS;
-    break; // Could enable AC coding, maybe? In future revisions.
-  default:
+  switch(frametype){
+	  case 0xFF03:scantype = AnsSequential;break;
+	  case 0xFF02:scantype = NoCompression;break;
+	default:
+	  switch(frametype & 0x07) {
+	  case JPGFLAG_BASELINE:
+	    scantype = Baseline;
+	    if (accoding)
+	      JPG_THROW(INVALID_PARAMETER,"Encoder::CreateImage","baseline coding does not allow arithmetic coding");
+	    break;
+	  case JPGFLAG_SEQUENTIAL:
+	    scantype = Sequential;
+	    if (accoding)
+	      scantype = ACSequential;
+	    break;
+	  case JPGFLAG_PROGRESSIVE:
+	    scantype = Progressive;
+	    if (accoding)
+	      scantype = ACProgressive;
+	    break;
+	  case JPGFLAG_LOSSLESS:
+	    scantype = Lossless;
+	    if (accoding)
+	      scantype = ACLossless;
+	    break;
+	  case JPGFLAG_JPEG_LS:
+	    scantype = JPEG_LS;
+	    break; // Could enable AC coding, maybe? In future revisions.
+	  default:
+  	
+  	default:
     JPG_THROW(INVALID_PARAMETER,"Encoder::CreateImage","specified invalid frame type");
+  	}
   }
   
   if (maxerror > 255)
@@ -163,6 +170,14 @@ class Image *Encoder::CreateDefaultImage(ULONG width,ULONG height,UBYTE depth,UB
   m_pTables->InstallDefaultTables(tags);
 
   if (residual) {
+  	switch(frametype){
+	  case 0xFF02:
+	  case 0xFF03:
+	  	if (precision > 8) {
+			precision = 8;
+      	}
+      break;
+    }
     switch(frametype & 0x07) {
     case JPGFLAG_BASELINE:
     case JPGFLAG_SEQUENTIAL:

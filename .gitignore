@@ -176,3 +176,4 @@ gitignore
 .deps
 *.exe
 openjp2
+benchmark

@@ -332,6 +332,11 @@ void Scan::CreateParser(void)
   assert(m_pParser == NULL);
   //
   switch(type) {
+  case NoCompression:
+  	m_pParser = new(m_pEnviron) class SequentialScan(m_pFrame,this,
+						     m_ucScanStart,m_ucScanStop,
+						     m_ucLowBit + m_ucHiddenBits,0);
+    break;
   case Baseline:
   case Sequential:
     m_pParser = new(m_pEnviron) class SequentialScan(m_pFrame,this,

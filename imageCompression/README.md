@@ -85,11 +85,6 @@ related links
 OTHERS
 ======
  * [照片新格式，BPG比JPEG小一半但画质相同](http://www.oschina.net/news/57944/bpg-new-image-format-wants-replace-jpeg-equal-quality-half-size)
- * [matlab implementation](http://www.mathworks.com/matlabcentral/fileexchange/10476-jpeg-codec)
+ * [Matlab JPEG Toolbox](http://www.codeforge.cn/read/139099/README__html)
+ * [JPEG Codec-by Ravi Lakkundi](http://www.mathworks.com/matlabcentral/fileexchange/10476-jpeg-codec)
 
-matlab implementation
----------------------
-
-* [rubychilds/JPEGCompression](https://github.com/rubychilds/JPEGCompression)
-* [JPEG Encoder Decoder -by Muhammad Anwarul Azim](http://cn.mathworks.com/matlabcentral/fileexchange/15335-jpeg-encoder-decoder)
-* [用MATLAB实现JPEG压缩过程](http://blog.sina.com.cn/s/blog_a98e39a20101507s.html)

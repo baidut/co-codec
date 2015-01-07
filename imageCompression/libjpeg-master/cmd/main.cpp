@@ -676,8 +676,8 @@ void BuildToneMapping(FILE *in,int w,int h,int depth,int count,UWORD tonemapping
 /// Encode
 void Encode(const char *source,const char *target,int quality,int hdrquality,int maxerror,
 	    int colortrafo,bool lossless,bool progressive,
-	    bool reversible,bool residual,bool optimize,bool accoding,bool dconly,
-	    UBYTE levels,bool pyramidal,bool writednl,UWORD restart,double gamma,
+	    bool reversible,bool residual,bool optimize,bool accoding,bool nocompression,bool anscoding,bool dconly,
+	    UBYTE levels,bool pyramidal, bool writednl,UWORD restart,double gamma,
 	    int lsmode,bool hadamard,bool noiseshaping,int hiddenbits,const char *sub)
 { 
   struct JPG_TagItem dcscan[] = { // scan parameters for the first DCOnly scan
@@ -826,7 +826,12 @@ void Encode(const char *source,const char *target,int quality,int hdrquality,int
 	    if (pyramidal)
 	      frametype |= JPGFLAG_PYRAMIDAL;
 	    
-	    {		  
+		if (nocompression)
+		  frametype = 0xFF02;
+	    if (anscoding)
+		  frametype = 0xFF03;
+		
+		{		  
 	      int ok = 1;
 	      struct BitmapMemory bmm;
 	      struct JPG_Hook bmhook(BitmapHook,&bmm);
@@ -962,6 +967,8 @@ int main(int argc,char **argv)
   bool hadamard     = false;
   bool noiseshaping = false;
   bool pfm          = false;
+  bool nocompression= false;
+  bool anscoding    = false;
   const char *sub   = NULL;
 
   printf("libjpeg,jpeg Copyright (C) 2011-2012 Accusoft, Thomas Richter\n"
@@ -1121,6 +1128,14 @@ int main(int argc,char **argv)
       pfm = true;
       argv++;
       argc--;
+    } else if (!strcmp(argv[1],"-no")) {
+      nocompression = true;
+      argv++;
+      argc--;
+    } else if (!strcmp(argv[1],"-ans")) {
+      anscoding = true;
+      argv++;
+      argc--;
     } else {
       fprintf(stderr,"unsupported command line switch %s\n",argv[1]);
       return 20;
@@ -1192,6 +1207,8 @@ int main(int argc,char **argv)
 	    "             Note that this transformation is only CONFORMING TO 14495-2\n"
 	    "             AND NOT CONFORMING TO 10918-1. Works for near-lossless JPEG LS\n"
 	    "             DO NOT USE FOR LOSSY 10918-1, it will also create artifacts.\n"
+	    "-no        : no entropy compression\n"
+	    "-ans       : ans entropy compression\n"
 	    "-pfm       : write 16 bit output as pfm files\n",
 	    argv[0]);
     return 5;
@@ -1201,7 +1218,7 @@ int main(int argc,char **argv)
     Reconstruct(argv[1],argv[2],forceint,forcefix,colortrafo,pfm);
   } else {
     Encode(argv[1],argv[2],quality,hdrquality,maxerror,colortrafo,lossless,progressive,
-	   reversible,residuals,optimize,accoding,dconly,levels,pyramidal,writednl,restart,
+	   reversible,residuals,optimize,accoding,nocompression,anscoding,dconly,levels,pyramidal,writednl,restart,
 	   gamma,lsmode,hadamard,noiseshaping,hiddenbits,sub);
   }
   
