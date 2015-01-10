@@ -143,10 +143,10 @@ double readFloat(FILE *in,bool bigendian)
   dt4 = fgetc(in);
 
   if (bigendian) {
-    u.long_buf = (ULONG(dt1) << 24) | (ULONG(dt2) << 16) | 
+    u.long_buf = (ULONG(dt1) << 24) | (ULONG(dt2) << 16) |
       (ULONG(dt3) <<  8) | (ULONG(dt4) <<  0);
   } else {
-    u.long_buf = (ULONG(dt4) << 24) | (ULONG(dt3) << 16) | 
+    u.long_buf = (ULONG(dt4) << 24) | (ULONG(dt3) << 16) |
       (ULONG(dt2) <<  8) | (ULONG(dt1) <<  0);
   }
 
@@ -203,7 +203,7 @@ JPG_LONG BitmapHook(struct JPG_Hook *hook, struct JPG_TagItem *tags)
   ULONG maxy = tags->GetTagData(JPGTAG_BIO_MAXY);
   assert(comp < bmm->bmm_usDepth);
   assert(maxy - miny < bmm->bmm_ulHeight);
-  
+
   switch(tags->GetTagData(JPGTAG_BIO_ACTION)) {
   case JPGFLAG_BIO_REQUEST:
     {
@@ -217,7 +217,7 @@ JPG_LONG BitmapHook(struct JPG_Hook *hook, struct JPG_TagItem *tags)
 	tags->SetTagData(JPGTAG_BIO_BYTESPERROW  ,bmm->bmm_usDepth * bmm->bmm_ulWidth * sizeof(UBYTE));
 	tags->SetTagData(JPGTAG_BIO_BYTESPERPIXEL,bmm->bmm_usDepth * sizeof(UBYTE));
 	tags->SetTagData(JPGTAG_BIO_PIXELTYPE    ,bmm->bmm_ucPixelType);
-      } else if (bmm->bmm_ucPixelType == CTYP_UWORD) {	
+      } else if (bmm->bmm_ucPixelType == CTYP_UWORD) {
 	UWORD *mem = (UWORD *)(bmm->bmm_pMemPtr);
 	mem += comp;
 	mem -= miny * bmm->bmm_usDepth * bmm->bmm_ulWidth;
@@ -362,7 +362,7 @@ JPG_LONG BitmapHook(struct JPG_Hook *hook, struct JPG_TagItem *tags)
 		    data++;
 		    fputc(*data >> 8,bmm->bmm_pTarget); // PPM is big endian.
 		    fputc(*data     ,bmm->bmm_pTarget);
-		    data++; 
+		    data++;
 		    fputc(*data >> 8,bmm->bmm_pTarget); // PPM is big endian.
 		    fputc(*data     ,bmm->bmm_pTarget);
 		    data++;
@@ -405,14 +405,14 @@ JPG_LONG FileHook(struct JPG_Hook *hook, struct JPG_TagItem *tags)
     {
       UBYTE *buffer = (UBYTE *)tags->GetTagPtr(JPGTAG_FIO_BUFFER);
       ULONG  size   = (ULONG  )tags->GetTagData(JPGTAG_FIO_SIZE);
-      
+
       return fread(buffer,1,size,in);
     }
   case JPGFLAG_ACTION_WRITE:
     {
       UBYTE *buffer = (UBYTE *)tags->GetTagPtr(JPGTAG_FIO_BUFFER);
       ULONG  size   = (ULONG  )tags->GetTagData(JPGTAG_FIO_SIZE);
-      
+
       return fwrite(buffer,1,size,in);
     }
   case JPGFLAG_ACTION_SEEK:
@@ -441,7 +441,7 @@ JPG_LONG FileHook(struct JPG_Hook *hook, struct JPG_TagItem *tags)
 // and writes the output ppm.
 void Reconstruct(const char *infile,const char *outfile,
 		 bool forceint,bool forcefix,int colortrafo,bool pfm)
-{  
+{
   FILE *in = fopen(infile,"rb");
   if (in) {
     struct JPG_Hook filehook(FileHook,in);
@@ -450,7 +450,7 @@ void Reconstruct(const char *infile,const char *outfile,
       int ok = 1;
       struct JPG_TagItem tags[] = {
 	JPG_PointerTag(JPGTAG_HOOK_IOHOOK,&filehook),
-	JPG_PointerTag(JPGTAG_HOOK_IOSTREAM,in), 
+	JPG_PointerTag(JPGTAG_HOOK_IOSTREAM,in),
 	JPG_ValueTag(JPGTAG_DECODER_FORCEINTEGERDCT,forceint),
 	JPG_ValueTag(JPGTAG_DECODER_FORCEFIXPOINTDCT,forcefix),
 	JPG_ValueTag(JPGTAG_IMAGE_COLORTRANSFORMATION,colortrafo),
@@ -470,8 +470,8 @@ void Reconstruct(const char *infile,const char *outfile,
 	  ULONG height = itags->GetTagData(JPGTAG_IMAGE_HEIGHT);
 	  UBYTE depth  = itags->GetTagData(JPGTAG_IMAGE_DEPTH);
 	  UBYTE prec   = itags->GetTagData(JPGTAG_IMAGE_PRECISION);
-	  
-	  
+
+
 	  UBYTE *mem   = (UBYTE *)malloc(width * 8 * depth * ((prec > 8)?(2):(1)));
 	  if (mem) {
 	    struct BitmapMemory bmm;
@@ -490,7 +490,7 @@ void Reconstruct(const char *infile,const char *outfile,
 	      ULONG lastline;
 	      struct JPG_Hook bmhook(BitmapHook,&bmm);
 	      struct JPG_TagItem tags[] = {
-		JPG_PointerTag(JPGTAG_BIH_HOOK,&bmhook), 
+		JPG_PointerTag(JPGTAG_BIH_HOOK,&bmhook),
 		JPG_ValueTag(JPGTAG_DECODER_MINY,y),
 		JPG_ValueTag(JPGTAG_DECODER_MAXY,y+7),
 		JPG_EndTag
@@ -564,7 +564,7 @@ void ParseSubsamplingFactors(UBYTE *sx,UBYTE *sy,const char *sub,int cnt)
 /// BuildToneMapping
 // Make a simple attempt to find a reasonable tone mapping from HDR to LDR.
 // This is by no means ideal, but seem to work well in most cases.
-// 
+//
 // The algorithm used here is a simplified version of the exrpptm tone mapper,
 // found in the following paper:
 // Erik Reinhard and Kate Devlin. Dynamic Range Reduction Inspired by
@@ -592,7 +592,7 @@ void BuildToneMapping(FILE *in,int w,int h,int depth,int count,UWORD tonemapping
       double y;
 
       if (count == 3) {
-	if (flt) { 
+	if (flt) {
 	  double rf,gf,bf;
 	  rf = readFloat(in,bigendian);
 	  gf = readFloat(in,bigendian);
@@ -659,14 +659,14 @@ void BuildToneMapping(FILE *in,int w,int h,int depth,int count,UWORD tonemapping
       double out = i / double(maxin);
       double in  = pow(pow(lav,m) * out / (1.0 - out),2.2);
       if (in < 0.0) in = 0.0;
-      
+
       tonemapping[i] = DoubleToHalf(in);
     } else {
       double out = i / double(maxin);
       double in  = max * (miny + (maxy - miny) * pow(lav,m) * out / (1.0 - out));
       if (in < 0.0) in = 0.0;
       if (in > max) in = max;
-      
+
       tonemapping[i] = in;
     }
   }
@@ -679,7 +679,7 @@ void Encode(const char *source,const char *target,int quality,int hdrquality,int
 	    bool reversible,bool residual,bool optimize,bool accoding,bool nocompression,bool anscoding,bool dconly,
 	    UBYTE levels,bool pyramidal, bool writednl,UWORD restart,double gamma,
 	    int lsmode,bool hadamard,bool noiseshaping,int hiddenbits,const char *sub)
-{ 
+{
   struct JPG_TagItem dcscan[] = { // scan parameters for the first DCOnly scan
     JPG_ValueTag(JPGTAG_SCAN_SPECTRUM_START,0),
     JPG_ValueTag(JPGTAG_SCAN_SPECTRUM_STOP,0),
@@ -695,7 +695,7 @@ void Encode(const char *source,const char *target,int quality,int hdrquality,int
     JPG_ValueTag(JPGTAG_SCAN_COMPONENT0,0),
     JPG_ValueTag(JPGTAG_SCAN_SPECTRUM_START,1),
     JPG_ValueTag(JPGTAG_SCAN_SPECTRUM_STOP,5),
-    JPG_ValueTag(JPGTAG_SCAN_APPROXIMATION_LO,2), 
+    JPG_ValueTag(JPGTAG_SCAN_APPROXIMATION_LO,2),
     JPG_EndTag
   };
   struct JPG_TagItem pscan3[] = {
@@ -706,20 +706,20 @@ void Encode(const char *source,const char *target,int quality,int hdrquality,int
     JPG_EndTag
   };
   struct JPG_TagItem pscan4[] = {
-    JPG_ValueTag(JPGTAG_SCAN_COMPONENT0,0), 
+    JPG_ValueTag(JPGTAG_SCAN_COMPONENT0,0),
     JPG_ValueTag(JPGTAG_SCAN_SPECTRUM_START,6),
     JPG_ValueTag(JPGTAG_SCAN_SPECTRUM_STOP,63),
     JPG_ValueTag(JPGTAG_SCAN_APPROXIMATION_LO,2),
     JPG_EndTag
-  }; 
+  };
   struct JPG_TagItem pscan5[] = {
-    JPG_ValueTag(JPGTAG_SCAN_COMPONENT0,0), 
+    JPG_ValueTag(JPGTAG_SCAN_COMPONENT0,0),
     JPG_ValueTag(JPGTAG_SCAN_SPECTRUM_START,1),
     JPG_ValueTag(JPGTAG_SCAN_SPECTRUM_STOP,63),
     JPG_ValueTag(JPGTAG_SCAN_APPROXIMATION_LO,1),
     JPG_ValueTag(JPGTAG_SCAN_APPROXIMATION_HI,2),
     JPG_EndTag
-  };  
+  };
   struct JPG_TagItem pscan6[] = {
     JPG_ValueTag(JPGTAG_SCAN_SPECTRUM_START,0),
     JPG_ValueTag(JPGTAG_SCAN_SPECTRUM_STOP,0),
@@ -806,7 +806,7 @@ void Encode(const char *source,const char *target,int quality,int hdrquality,int
 	  }
 
 	  FILE *out = fopen(target,"wb");
-	  if (out) { 
+	  if (out) {
 	    int frametype = JPGFLAG_SEQUENTIAL;
 	    if (lossless) {
 	      frametype = JPGFLAG_LOSSLESS;
@@ -815,7 +815,7 @@ void Encode(const char *source,const char *target,int quality,int hdrquality,int
 	    } else if (lsmode >=0) {
 	      frametype = JPGFLAG_JPEG_LS;
 	    }
-	    if (reversible) 
+	    if (reversible)
 	      frametype |= JPGFLAG_REVERSIBLE_DCT;
 	    if (residual)
 	      frametype |= JPGFLAG_RESIDUAL_CODING;
@@ -825,13 +825,13 @@ void Encode(const char *source,const char *target,int quality,int hdrquality,int
 	      frametype |= JPGFLAG_ARITHMETIC;
 	    if (pyramidal)
 	      frametype |= JPGFLAG_PYRAMIDAL;
-	    
+
 		if (nocompression)
 		  frametype = JPGCODE_SOF_NO_COMP;
 	    if (anscoding)
 		  frametype = JPGCODE_SOF_ANS_SEQ;
-		
-		{		  
+
+		{
 	      int ok = 1;
 	      struct BitmapMemory bmm;
 	      struct JPG_Hook bmhook(BitmapHook,&bmm);
@@ -839,9 +839,9 @@ void Encode(const char *source,const char *target,int quality,int hdrquality,int
 		JPG_PointerTag(JPGTAG_BIH_HOOK,&bmhook),
 		JPG_ValueTag(JPGTAG_DECODER_USE_COLORS,true),
 		JPG_ValueTag(JPGTAG_ENCODER_LOOP_ON_INCOMPLETE,true),
-		JPG_ValueTag(JPGTAG_IMAGE_WIDTH,width), 
-		JPG_ValueTag(JPGTAG_IMAGE_HEIGHT,height), 
-		JPG_ValueTag(JPGTAG_IMAGE_DEPTH,depth),      
+		JPG_ValueTag(JPGTAG_IMAGE_WIDTH,width),
+		JPG_ValueTag(JPGTAG_IMAGE_HEIGHT,height),
+		JPG_ValueTag(JPGTAG_IMAGE_DEPTH,depth),
 		JPG_ValueTag(JPGTAG_IMAGE_PRECISION,prec),
 		JPG_ValueTag(JPGTAG_IMAGE_FRAMETYPE,frametype),
 		JPG_ValueTag((quality >= 0)?JPGTAG_IMAGE_QUALITY:JPGTAG_TAG_IGNORE,quality),
@@ -887,14 +887,14 @@ void Encode(const char *source,const char *target,int quality,int hdrquality,int
 		  bmm.bmm_pSource     = in;
 		  bmm.bmm_bFloat      = flt;
 		  bmm.bmm_bBigEndian  = big;
-	      
+
 		  //
 		  // Push the image into the frame. We could
 		  // get away with writing the image as it is
 		  // pushed into the image, but then only a single
-		  // scan is allowed. 
+		  // scan is allowed.
 		  ok = jpeg->ProvideImage(tags);
-		  
+
 		  if (ok) {
 		    struct JPG_Hook filehook(FileHook,out);
 		    struct JPG_TagItem iotags[] = {
@@ -1074,7 +1074,7 @@ int main(int argc,char **argv)
       argv++;
       argc--;
     } else if (!strcmp(argv[1],"-a")) {
-      accoding = true; 
+      accoding = true;
       argv++;
       argc--;
     } else if (!strcmp(argv[1],"-d")) {
@@ -1094,7 +1094,7 @@ int main(int argc,char **argv)
       argv++;
       argc--;
     } else if (!strcmp(argv[1],"-g")) {
-      gamma = atof(argv[2]); 
+      gamma = atof(argv[2]);
       if (argv[2] == NULL) {
 	fprintf(stderr,"-g expects a numeric argument\n");
 	return 20;
@@ -1211,6 +1211,8 @@ int main(int argc,char **argv)
 	    "-ans       : ans entropy compression\n"
 	    "-pfm       : write 16 bit output as pfm files\n",
 	    argv[0]);
+
+    fprintf(stderr,"size of LONG:%d ULONG:%d\n",(sizeof(LONG)),(sizeof(ULONG)));
     return 5;
   }
 
@@ -1221,7 +1223,7 @@ int main(int argc,char **argv)
 	   reversible,residuals,optimize,accoding,nocompression,anscoding,dconly,levels,pyramidal,writednl,restart,
 	   gamma,lsmode,hadamard,noiseshaping,hiddenbits,sub);
   }
-  
+
   return 0;
 }
 ///

@@ -29,8 +29,3 @@ core
 
 #Editor temporaries
 *~
-
-# baidut addition
-# codeblock
-*.layout
-*.depend

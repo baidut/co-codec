@@ -49,8 +49,25 @@ the committee itself.
 ** ANS entropy codec approach 
 **
 */
-/// ANSScan::ANSScan
-ANSScan::ANSScan(class Frame *frame,class Scan *scan,
+/// ANSSequentialScan::ANSSequentialScan
+/// Includes
+#include "codestream/sequentialscan.hpp"
+#include "codestream/tables.hpp"
+#include "marker/frame.hpp"
+#include "marker/component.hpp"
+#include "coding/quantizedrow.hpp"
+#include "codestream/rectanglerequest.hpp"
+#include "dct/idct.hpp"
+#include "dct/sermsdct.hpp"
+#include "std/assert.hpp"
+#include "interface/bitmaphook.hpp"
+#include "interface/imagebitmap.hpp"
+#include "colortrafo/colortrafo.hpp"
+#include "tools/traits.hpp"
+#include "control/blockbuffer.hpp"
+#include "control/blockbitmaprequester.hpp"
+#include "control/blocklineadapter.hpp"
+ANSSequentialScan::ANSSequentialScan(class Frame *frame,class Scan *scan,
            UBYTE start,UBYTE stop,UBYTE lowbit,UBYTE,
            bool differential,bool residual)
   : EntropyParser(frame,scan), m_pBlockCtrl(NULL),
@@ -63,23 +80,23 @@ ANSScan::ANSScan(class Frame *frame,class Scan *scan,
 }
 ///
 
-/// ANSScan::~ANSScan
-ANSScan::~ANSScan(void)
+/// ANSSequentialScan::~ANSSequentialScan
+ANSSequentialScan::~ANSSequentialScan(void)
 {
   // destruct ... 
 }
 ///
 
-// ANSScan::WriteMCU
+// ANSSequentialScan::WriteMCU
 // Write a single MCU in this scan. Return true if there are more blocks in this row.
-bool ANSScan::WriteMCU(void)
+bool ANSSequentialScan::WriteMCU(void)
 { 
   bool more = true;
   int c;
 
   assert(m_pBlockCtrl); 
-  BeginWriteMCU(m_Coder.ByteStreamOf()); //  class QMCoder m_Coder; The QM coder doing the main work here.
-  //BeginWriteMCU(m_Stream.ByteStreamOf());// BitStream<false> m_Stream; The bitstream from which we read the data. 
+  // 最简单直接采用ByteStream类BeginWriteMCU(m_Coder.ByteStreamOf()); // class QMCoder m_Coder; The QM coder doing the main work here.
+  BeginWriteMCU(m_Stream.ByteStreamOf());
   
 
   for(c = 0;c < m_ucCount;c++) {
@@ -105,7 +122,7 @@ bool ANSScan::WriteMCU(void)
         }
         // 调用具体编码器进行编码
         // EncodeBlock(block,prevdc,prevdiff,l,u,kx,m_ucDCContext[c],m_ucACContext[c]); 
-
+	    // 改为不进行编码，直接输出
         // --------------------------------------------------------------------------
       }
       if (q) q = q->NextOf();
@@ -118,16 +135,16 @@ bool ANSScan::WriteMCU(void)
 }
 /// 
 
-/// ANSScan::ParseMCU
+/// ANSSequentialScan::ParseMCU
 // Parse a single MCU in this scan. Return true if there are more blocks in this row.
-bool ANSScan::ParseMCU(void)
+bool ANSSequentialScan::ParseMCU(void)
 {
   bool more = true;
   int c;
 
   assert(m_pBlockCtrl);
 
-  bool valid = BeginReadMCU(m_Coder.ByteStreamOf());
+  bool valid = BeginReadMCU(m_Stream.ByteStreamOf());
   
   for(c = 0;c < m_ucCount;c++) {
     class Component *comp    = m_pComponent[c];
@@ -171,19 +188,27 @@ bool ANSScan::ParseMCU(void)
 }
 ///
 
-/// ANSScan::EncodeBlock
+/// ANSSequentialScan::EncodeBlock
 // Encode a single huffman block
-void ANSScan::EncodeBlock(const LONG *block,
+void ANSSequentialScan::EncodeBlock(const LONG *block,
 /*参数根据需要设置*/
            LONG &prevdc,LONG &prevdiff,
            UBYTE small,UBYTE large,UBYTE kx,UBYTE dc,UBYTE ac)
+void SequentialScan::EncodeBlock(const LONG *block,
+				 class HuffmanCoder *dc,class HuffmanCoder *ac,
+				 LONG &prevdc,UWORD &skip)
 {
+// 直流系数一般较大，可以利用相邻直流系数比较接近的特点进行差值编码
+// 按照首位为1进行编码（即截断二进制编码），否则输出0，解码时看是0，就说明是0，看是1，先读有几位，再读入值
+// 交流系数采用zig扫描后采用游程编码，最后再进行哈夫曼编码
+// 前面都是利用了数据的规律性，最后一步哈夫曼编码则是利用统计冗余，属于熵编码
   // DC coding
   if (m_ucScanStart == 0 && m_bResidual == false) {
-    
-	LONG diff;
+    UBYTE symbol = 0;
+    LONG diff;
+    //
     // DPCM coding of the DC coefficient.
-    diff   = block[0] >> m_ucLowBit; // only correct for two's completement machines
+    diff   = block[0] >> m_ucLowBit; // Actually, only correct for two's complement machines...
     diff  -= prevdc;
     if (m_bDifferential) {
       prevdc = 0;
@@ -191,151 +216,92 @@ void ANSScan::EncodeBlock(const LONG *block,
       prevdc = block[0] >> m_ucLowBit;
     }
 
-    if (diff) {
-      LONG sz;
-      //
-      // Nonzero, encode a one in context zero.
-      m_Coder.Put(cz.S0,true);
-      //
-      // Sign coding. Encode a zero for positive and a 1 for
-      // negative.
-	  /* 为正数的时候写入diff,为负数的时候要写入diff-1*/
-      if (diff < 0) {
- 			m_Coder.Put(cz.SS,true);
-  			sz = -diff - 1;
-      } else {
-  			m_Coder.Put(cz.SS,false);
-  			sz = diff - 1;
-      }
-      //
-      // Code the magnitude.
-      if (sz >= 1) {
-  int  i = 0;
-  LONG m = 2;
-  m_Coder.Put((diff > 0)?(cz.SP):(cz.SN),true);
-  //
-  // Magnitude category coding.
-  while(sz >= m) {
-    m_Coder.Put(m_Context[dc].DCMagnitude.X[i],true);
-    m <<= 1;
-    i++;
-  } 
-  // Terminate magnitude cathegory coding.
-  m_Coder.Put(m_Context[dc].DCMagnitude.X[i],false);
-  //
-  // Get the MSB to code.
-  m >>= 1;
-  // Refinement bits: Depend on the magnitude category.
-  while((m >>= 1)) {
-    m_Coder.Put(m_Context[dc].DCMagnitude.M[i],(m & sz)?(true):(false));
-  }
-      } else {
-  m_Coder.Put((diff > 0)?(cz.SP):(cz.SN),false);
-      }
+    if (diff) { // 编码差值
+      do {
+			symbol++;
+			if (diff > -(1L << symbol) && diff < (1L << symbol)) {
+		  		dc->Put(&m_Stream,symbol);
+		  		if (diff >= 0) {
+		    		m_Stream.Put(symbol,diff);
+		  		} else {
+			    	m_Stream.Put(symbol,diff - 1);
+			  	}
+		  		break;
+			}
+      } while(true);
     } else {
-      // Difference is zero. Encode a zero in context zero.
-      m_Coder.Put(cz.S0,false);
+      m_Stream.Put(symbol,0); //dc->Put(&m_Stream,0);
     }
-    // Keep the difference for the next block.
-    prevdiff = diff;
   }
-
- // AC coding
+  
+  // AC coding
   if (m_ucScanStop) {
-    LONG data;
-    int eob,k;
-    // AC coding. Part one. Find the end of block.
-    // eob is the index of the first zero coefficient from
-    // which point on this, and all following coefficients
-    // up to coefficient with index 63 are zero.
-    eob = m_ucScanStop;
-    k   = (m_ucScanStart)?(m_ucScanStart):((m_bResidual)?0:1);
-    //
-    while(eob >= k) {
-      data = block[DCT::ScanOrder[eob]];
-      if ((data >= 0)?(data >> m_ucLowBit):((-data) >> m_ucLowBit))
-  break;
-      eob--;
-    }
-    // The coefficient at eob is now nonzero, but eob+1 is
-    // a zero coefficient or beyond the block end.
-    eob++; // the first coefficient *not* to code.
+    UBYTE symbol,run = 0;
+    int k = (m_ucScanStart)?(m_ucScanStart):((m_bResidual)?0:1);
 
     do {
-      LONG data,sz;
-      //
-      if (k == eob) {
-  m_Coder.Put(m_Context[ac].ACZero[k-1].SE,true); // Code EOB.
-  break;
-      }
-      // Not EOB.
-      m_Coder.Put(m_Context[ac].ACZero[k-1].SE,false);
-      //
-      // Run coding in S0. Since k is not the eob, at least
-      // one non-zero coefficient must follow, so we cannot
-      // run over the end of the block.
-      do {
-  data = block[DCT::ScanOrder[k]];
-  data = (data >= 0)?(data >> m_ucLowBit):(-((-data) >> m_ucLowBit));
-  if (data == 0) {
-    m_Coder.Put(m_Context[ac].ACZero[k-1].S0,false);
-    k++;
-  }
-      } while(data == 0);
-      m_Coder.Put(m_Context[ac].ACZero[k-1].S0,true);
-      //
-      // The coefficient at k is now nonzero. First code
-      // the sign. This context is the uniform.
-      if (data < 0) {
-  m_Coder.Put(m_Context[ac].Uniform,true);
-  sz = -data - 1;
+      LONG data = block[DCT::ScanOrder[k]];
+      // Implement the point transformation. This is here a division, not
+      // a shift (rounding is different for negative numbers).
+      data = (data >= 0)?(data >> m_ucLowBit):(-((-data) >> m_ucLowBit));
+      if (data == 0) {
+	run++;
       } else {
-  m_Coder.Put(m_Context[ac].Uniform,false);
-  sz =  data - 1;
+	// Are there any skipped blocks we still need to code? Since this
+	// block is none of them.
+	if (skip)
+	  CodeBlockSkip(ac,skip);
+	//
+	// First ensure that the run is at most 15, the largest cathegory.
+	while(run > 15) {
+	  ac->Put(&m_Stream,0xf0); // r = 15 and s = 0
+	  run -= 16;
+	}
+	symbol = 0;
+	do {
+	  symbol++;
+	  if (data > -(1L << symbol) && data < (1L << symbol)) {
+	    assert(symbol < 16);
+	    // Cathegory symbol, run length run
+	    ac->Put(&m_Stream,symbol | (run << 4));
+	    if (data >= 0) {
+	      m_Stream.Put(symbol,data);
+	    } else {
+	      m_Stream.Put(symbol,data - 1);
+	    }
+	    break;
+	  }
+	} while(true);
+	//
+	// Run is over.
+	run = 0;
       }
-      //
-      // Code the magnitude category. 
-      if (sz >= 1) {
-  m_Coder.Put(m_Context[ac].ACZero[k-1].SP,true); // SP or SN coding.
-  if (sz >= 2) {
-    int  i = 0;
-    LONG m = 4;
-    struct QMContextSet::ACContextMagnitudeSet &acm = (k > kx)?(m_Context[ac].ACMagnitudeHigh):(m_Context[ac].ACMagnitudeLow);
-    //
-    m_Coder.Put(m_Context[ac].ACZero[k-1].SP,true); // X1 coding, identical to SN and SP.
-    // Note that AC_SN,AC_SP and AC_X1 are all the same context
-    // all following decisions are not conditioned on k directly.
-    while(sz >= m) {
-      m_Coder.Put(acm.X[i],true);
-      m <<= 1;
-      i++;
-    }
-    m_Coder.Put(acm.X[i],false);
-    //
-    // Get the MSB to code.
-    m >>= 1;
-    //
-    // Magnitude refinement coding.
-    while((m >>= 1)) {
-      m_Coder.Put(acm.M[i],(m & sz)?true:false);
-    }
-  } else {
-    m_Coder.Put(m_Context[ac].ACZero[k-1].SP,false);
-  }
-      } else {
-  m_Coder.Put(m_Context[ac].ACZero[k-1].SP,false);
-      }
-      //
-      // Encode the next coefficient. Note that this bails out early without an
-      // S0 encoding if the end is reached.
     } while(++k <= m_ucScanStop);
+
+    // Is there still an open run? If so, code an EOB in the regular mode.
+    // If this is part of the (isolated) AC scan of the progressive JPEG,
+    // check whether we could potentially accumulate this into a run of
+    // zero blocks.
+    if (run) {
+      // Include in a block skip (or try to, rather).
+      if (m_ucScanStart || m_bResidual) {
+	skip++;
+	if (skip == MAX_WORD) // avoid an overflow, code now
+	  CodeBlockSkip(ac,skip);
+      } else {
+	// In sequential mode, encode as EOB.
+	ac->Put(&m_Stream,0x00);
+      }
+    }
   }
 }
 ///
 
-/// ANSScan::DecodeBlock
+///
+
+/// ANSSequentialScan::DecodeBlock
 // Decode a single huffman block.
-void ANSScan::DecodeBlock(LONG *block,
+void ANSSequentialScan::DecodeBlock(LONG *block,
            LONG &prevdc,LONG &prevdiff,
            UBYTE small,UBYTE large,UBYTE kx,UBYTE dc,UBYTE ac)
 {
@@ -359,7 +325,7 @@ void ANSScan::DecodeBlock(LONG *block,
     m <<= 1;
     i++;
     if (m == 0) 
-      JPG_THROW(MALFORMED_STREAM,"ANSScan::DecodeBlock",
+      JPG_THROW(MALFORMED_STREAM,"ANSSequentialScan::DecodeBlock",
           "QMDecoder is out of sync");
   }
   //
@@ -410,7 +376,7 @@ void ANSScan::DecodeBlock(LONG *block,
       while(!m_Coder.Get(m_Context[ac].ACZero[k-1].S0)) {
   k++;
   if (k > m_ucScanStop)
-    JPG_THROW(MALFORMED_STREAM,"ANSScan::DecodeBlock",
+    JPG_THROW(MALFORMED_STREAM,"ANSSequentialScan::DecodeBlock",
         "QMDecoder is out of sync");
       }
       //
@@ -430,7 +396,7 @@ void ANSScan::DecodeBlock(LONG *block,
       m <<= 1;
       i++;
       if (m == 0)
-        JPG_THROW(MALFORMED_STREAM,"ANSScan::DecodeBlock",
+        JPG_THROW(MALFORMED_STREAM,"ANSSequentialScan::DecodeBlock",
       "QMDecoder is out of sync");
     }
     //
@@ -464,107 +430,62 @@ void ANSScan::DecodeBlock(LONG *block,
 }
 ///
 
-/// ANSScan::StartWriteScan
-void ANSScan::StartWriteScan(class ByteStream *io,class BufferCtrl *ctrl)
+/// ANSSequentialScan::StartWriteScan
+ // Write the marker to the stream.
+void ANSSequentialScan::StartWriteScan(class ByteStream *io,class BufferCtrl *ctrl)
 { 
-  class ACTemplate *ac,*dc;
   int i;
 
   for(i = 0;i < m_ucCount;i++) {
-    dc = m_pScan->DCConditionerOf(i);
-    ac = m_pScan->ACConditionerOf(i);
-   
-    m_ucDCContext[i]  = m_pScan->DCTableIndexOf(i);
-    m_ucACContext[i]  = m_pScan->ACTableIndexOf(i);
-
-    if (dc) {
-      m_ucSmall[i]    = dc->LowerThresholdOf();
-      m_ucLarge[i]    = dc->UpperThresholdOf();
-    } else {
-      m_ucSmall[i]    = 0;
-      m_ucLarge[i]    = 1;
-    }
-
-    if (ac) {
-      m_ucBlockEnd[i] = ac->BandDiscriminatorOf();
-    } else {
-      m_ucBlockEnd[i] = 5;
-    }
+    // 读参数的逆过程
 
     m_lDC[i]           = 0;
-    m_lDiff[i]         = 0;
+   
     m_ulX[i]           = 0;
   }
-  for(i = 0;i < 4;i++) {
-    m_Context[i].Init();
-  }
+  restart();
 
   assert(!ctrl->isLineBased());
   m_pBlockCtrl = dynamic_cast<BlockBuffer *>(ctrl);
   m_pBlockCtrl->ResetToStartOfScan(m_pScan);
 
   m_pScan->WriteMarker(io);
-  m_Coder.OpenForWrite(io);
+  m_Stream.OpenForWrite(io);
+  // 其实就是restart();m_Coder.OpenForWrite(io);
 }
 ///
 
-/// ANSScan::StartParseScan
-void ANSScan::StartParseScan(class ByteStream *io,class BufferCtrl *ctrl)
+/// ANSSequentialScan::StartParseScan
+// Parse the marker contents.
+void ANSSequentialScan::StartParseScan(class ByteStream *io,class BufferCtrl *ctrl)
 { 
   class ACTemplate *ac,*dc;
   int i;
 
   for(i = 0;i < m_ucCount;i++) {
-    dc = m_pScan->DCConditionerOf(i);
-    ac = m_pScan->ACConditionerOf(i); 
+  // 调用m_pScan获取相关参数
     
-    m_ucDCContext[i]  = m_pScan->DCTableIndexOf(i);
-    m_ucACContext[i]  = m_pScan->ACTableIndexOf(i);
-
-    if (dc) {
-      m_ucSmall[i]    = dc->LowerThresholdOf();
-      m_ucLarge[i]    = dc->UpperThresholdOf();
-    } else {
-      m_ucSmall[i]    = 0;
-      m_ucLarge[i]    = 1;
-    }
-
-    if (ac) {
-      m_ucBlockEnd[i] = ac->BandDiscriminatorOf();
-    } else {
-      m_ucBlockEnd[i] = 5;
-    }
 
     m_lDC[i]         = 0; 
-    m_lDiff[i]       = 0;
+    // m_lDiff[i]       = 0;
     m_ulX[i]         = 0;
   }
   
-  for(i = 0;i < 4;i++) {
-    m_Context[i].Init();
-  }
+  // 
+  restart();
   
   assert(!ctrl->isLineBased());
   m_pBlockCtrl = dynamic_cast<BlockBuffer *>(ctrl);
   m_pBlockCtrl->ResetToStartOfScan(m_pScan);
-  m_Coder.OpenForRead(io);
-}
-///
-/// ANSScan::StartMeasureScan
-// Measure scan statistics.
-void ANSScan::StartMeasureScan(class BufferCtrl *)
-{ 
-  //
-  // This is not required.
-  JPG_THROW(NOT_IMPLEMENTED,"ANSScan::StartMeasureScan",
-      "arithmetic coding is always adaptive and does not require "
-      "to measure the statistics");
+
+  m_Stream.OpenForRead(io);// m_Coder.OpenForRead(io);
 }
 ///
 
-/// ANSScan::StartMCURow
+
+/// ANSSequentialScan::StartMCURow
 // Start a MCU scan. Returns true if there are more rows.
-bool ANSScan::StartMCURow(void)
+bool ANSSequentialScan::StartMCURow(void)
 {
   bool more = StartRow();
 
@@ -576,103 +497,86 @@ bool ANSScan::StartMCURow(void)
 }
 ///
 
-/// ANSScan::Restart
+/// ANSSequentialScan::Restart
 // Restart the parser at the next restart interval
-void ANSScan::Restart(void)
+void ANSSequentialScan::Restart(void)
 {
-  int i;
-  
-  for(i = 0;i < m_ucCount;i++) {
+  for(int i = 0;i < m_ucCount;i++) {
     m_lDC[i]         = 0; 
-    m_lDiff[i]       = 0;
+    //m_lDiff[i]       = 0;
   }
-  for(i = 0;i < 4;i++) {
-    m_Context[i].Init();
-  }
+
   
-  m_Coder.OpenForRead(m_Coder.ByteStreamOf());
+  m_Stream.OpenForRead(m_Stream.ByteStreamOf());
 }
 ///
 
-/// ANSScan::Flush
+/// ANSSequentialScan::Flush
 // Flush the remaining bits out to the stream on writing.
-void ANSScan::Flush(bool)
+void ANSSequentialScan::Flush(bool)
 {
-  int i;
   
-  m_Coder.Flush();
+  
+  m_Stream.Flush();//m_Coder.Flush();
 
-  for(i = 0;i < m_ucCount;i++) {
-    m_lDC[i]    = 0;
-    m_lDiff[i]  = 0;
-  }
-  for(i = 0;i < 4;i++) {
-    m_Context[i].Init();
-  }
-  
-  m_Coder.OpenForWrite(m_Coder.ByteStreamOf());
+  Restart();
+
 }
 ///
 
-/// ANSScan::WriteFrameType
+/// ANSSequentialScan::WriteFrameType
 // Write the marker that indicates the frame type fitting to this scan.
-void ANSScan::WriteFrameType(class ByteStream *io)
+void ANSSequentialScan::WriteFrameType(class ByteStream *io)
 {
   UBYTE hidden = m_pFrame->TablesOf()->HiddenDCTBitsOf();
 
   if (m_ucScanStart > 0 || m_ucScanStop < 63 || m_ucLowBit > hidden) {
-    // is progressive.
-    if (m_bDifferential)
+    // is progressive. // ans do not support progressive yet.
+    if (m_bDifferential){
       io->PutWord(0xffce);
-    else
-      io->PutWord(0xffca);
-  } else {
-    if (m_bDifferential)
-      io->PutWord(0xffcd); // AC differential sequential
-    else
-      io->PutWord(0xffc9); // AC sequential
-  }
-}
-///
-
-/// ANSScan::Classify
-// Find the DC context class depending on the previous DC and
-// the values of L and U given in the conditioner.
-struct ANSScan::QMContextSet::DCContextZeroSet &ANSScan::QMContextSet::Classify(LONG diff,UBYTE l,UBYTE u)
-{
-  LONG abs = (diff > 0)?(diff):(-diff);
-  
-  if (abs <= ((1 << l) >> 1)) {
-    // the zero cathegory.
-    return DCZero;
-  }
-  if (abs <= (1 << u)) {
-    if (diff < 0) {
-      return DCSmallNegative;
     } else {
-      return DCSmallPositive;
+      io->PutWord(0xffca);
+    }
+  } else {
+    if (m_bDifferential){
+      io->PutWord(JPGCODE_SOF_ANS_DIF_SEQ); // AC differential sequential
+    } else {
+      io->PutWord(JPGCODE_SOF_ANS_SEQ); // AC sequential
     }
   }
-  if (diff < 0) {
-    return DCLargeNegative;
-  } else {
-    return DCLargePositive;
-  }
 }
+
 ///
 
-/// ANSScan::GetRow
+
+/// 下面不需要修改-----------------------------------------------------------
+
+/// ANSSequentialScan::GetRow
 // Return the data to process for component c. Will be overridden
 // for residual scan types.
-class QuantizedRow *ANSScan::GetRow(UBYTE idx) const
+class QuantizedRow *ANSSequentialScan::GetRow(UBYTE idx) const
 {
   return m_pBlockCtrl->CurrentQuantizedRow(idx);
 }
 ///
 
-/// ANSScan::StartRow
-bool ANSScan::StartRow(void) const
+/// ANSSequentialScan::StartRow
+bool ANSSequentialScan::StartRow(void) const
 {
   return m_pBlockCtrl->StartMCUQuantizerRow(m_pScan);
 }
 ///
+
+/// 可选方法 不必须-----------------------------------------------------------
+/// ANSSequentialScan::StartMeasureScan
+// Measure scan statistics.
+void ANSSequentialScan::StartMeasureScan(class BufferCtrl *)
+{ 
+  //
+  // This is not required.
+  JPG_THROW(NOT_IMPLEMENTED,"ANSSequentialScan::StartMeasureScan",
+      "arithmetic coding is always adaptive and does not require "
+      "to measure the statistics");
+}
+///
+/// 内部方法-----------------------------------------------------------

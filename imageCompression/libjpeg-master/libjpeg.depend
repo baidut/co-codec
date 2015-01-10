@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1420619769 source:e:\github\co-codec\imagecompression\libjpeg-master\cmd\main.cpp
+1420896438 source:e:\github\co-codec\imagecompression\libjpeg-master\cmd\main.cpp
 	"main.hpp"
 	"std/stdio.hpp"
 	"std/stdlib.hpp"
@@ -76,7 +76,7 @@
 	"jpgtypes.hpp"
 	"tagitem.hpp"
 
-1420618199 e:\github\co-codec\imagecompression\libjpeg-master\\interface\parameters.hpp
+1420875301 e:\github\co-codec\imagecompression\libjpeg-master\\interface\parameters.hpp
 	"jpgtypes.hpp"
 	"tagitem.hpp"
 
@@ -337,7 +337,7 @@
 	"codestream/entropyparser.hpp"
 	"io/bytestream.hpp"
 
-1419855093 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\hiddenrefinementscan.cpp
+1420874179 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\hiddenrefinementscan.cpp
 	"codestream/hiddenrefinementscan.hpp"
 	"codestream/tables.hpp"
 	"marker/residualmarker.hpp"
@@ -357,7 +357,7 @@
 	"codestream/refinementscan.hpp"
 	"codestream/acrefinementscan.hpp"
 
-1419855099 e:\github\co-codec\imagecompression\libjpeg-master\\io\bitstream.hpp
+1420893175 e:\github\co-codec\imagecompression\libjpeg-master\\io\bitstream.hpp
 	"tools/environment.hpp"
 	"io/bytestream.hpp"
 
@@ -1216,11 +1216,10 @@
 	"upsampling/upsampler.hpp"
 	"std/string.hpp"
 
-1420870395 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\anssequentialscan.cpp
+1420896718 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\anssequentialscan.cpp
 	"codestream/anssequentialscan.hpp"
 	"codestream/tables.hpp"
 	"marker/frame.hpp"
-	"marker/scan.hpp"
 	"marker/component.hpp"
 	"coding/quantizedrow.hpp"
 	"codestream/rectanglerequest.hpp"
@@ -1231,19 +1230,19 @@
 	"interface/imagebitmap.hpp"
 	"colortrafo/colortrafo.hpp"
 	"tools/traits.hpp"
-	"control/blockbitmaprequester.hpp"
 	"control/blockbuffer.hpp"
+	"control/blockbitmaprequester.hpp"
 	"control/blocklineadapter.hpp"
-	"coding/actemplate.hpp"
-	"marker/actable.hpp"
 
-1420870219 e:\github\co-codec\imagecompression\libjpeg-master\\codestream\anssequentialscan.hpp
+1420890309 e:\github\co-codec\imagecompression\libjpeg-master\\codestream\anssequentialscan.hpp
 	"tools/environment.hpp"
 	"coding/qmcoder.hpp"
 	"coding/quantizedrow.hpp"
 	"codestream/entropyparser.hpp"
+	"marker/scan.hpp"
+	"io/bitstream.hpp"
 
-1420873684 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\encoder.cpp
+1420875415 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\encoder.cpp
 	"interface/types.hpp"
 	"tools/environment.hpp"
 	"codestream/encoder.hpp"
@@ -1254,7 +1253,7 @@
 	"marker/scan.hpp"
 	"std/assert.hpp"
 
-1420872850 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\image.cpp
+1420875446 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\image.cpp
 	"tools/environment.hpp"
 	"marker/scantypes.hpp"
 	"codestream/image.hpp"
@@ -1264,7 +1263,7 @@
 	"control/bitmapctrl.hpp"
 	"control/hierarchicalbitmaprequester.hpp"
 
-1420870574 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\tables.cpp
+1420875475 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\tables.cpp
 	"codestream/tables.hpp"
 	"marker/quantization.hpp"
 	"marker/huffmantable.hpp"
@@ -1299,7 +1298,7 @@
 	"coding/huffmanstatistics.hpp"
 	"std/stdio.hpp"
 
-1420870473 source:e:\github\co-codec\imagecompression\libjpeg-master\marker\frame.cpp
+1420875501 source:e:\github\co-codec\imagecompression\libjpeg-master\marker\frame.cpp
 	"marker/frame.hpp"
 	"marker/component.hpp"
 	"io/bytestream.hpp"

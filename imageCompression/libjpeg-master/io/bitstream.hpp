@@ -138,7 +138,7 @@ public:
   }
   //
   void OpenForWrite(class ByteStream *io)
-  { 
+  {
     m_pIO        = io;
     m_ucB        = 0;
     m_ucBits     = 8;
@@ -162,7 +162,7 @@ public:
   ULONG Get(void)
   {
     assert(n <= 32);
-    
+
     if (n <= m_ucBits) {
       m_ucBits -= n;
       return (m_ucB >> m_ucBits) & ((1UL << n) - 1);
@@ -182,13 +182,13 @@ public:
 	UBYTE avail = m_ucBits;
 	if (avail > bits)
 	  avail = bits; // do not remove more bits than requested.
-	
+
 	// remove avail bits from the byte
 	m_ucBits -= avail;
 	bits     -= avail;
 	res       = (res << avail) | ((m_ucB >> m_ucBits) & ((1UL << avail) - 1));
       } while(bits);
-      
+
       return res;
     }
   }
@@ -197,23 +197,23 @@ public:
   ULONG Get(UBYTE bits)
   {
     ULONG res  = 0;
-    
+
     assert(bits > 0 && bits <= 32);
 
-    do { 
+    do {
       if (m_ucBits == 0) {
 	Fill();
       }
       UBYTE avail = m_ucBits;
       if (avail > bits)
 	avail = bits; // do not remove more bits than requested.
-      
+
       // remove avail bits from the byte
       m_ucBits -= avail;
       bits     -= avail;
       res       = (res << avail) | ((m_ucB >> m_ucBits) & ((1UL << avail) - 1));
     } while(bits);
-    
+
     return res;
   }
   //
@@ -232,7 +232,7 @@ public:
 	m_ucB   |= (1 << m_ucBits) - 1;
       m_pIO->Put(m_ucB);
       m_ucBits = 8;
-      if (m_ucB == 0xff) {  // stuffing case? 
+      if (m_ucB == 0xff) {  // stuffing case?
 	m_pIO->Put(0x00);    // stuff a zero byte
 	// Note that this must also happen if we are bitstuffing to avoid a pseudo-0xffff
 	// marker (JPEG 2000 could have dropped the 0xff here, but we can't).
@@ -243,7 +243,7 @@ public:
     }
   }
   //
-  // Skip the bitstuffed zero-bit at the end of a 
+  // Skip the bitstuffed zero-bit at the end of a
   // line to be able to parse for a marker segment. This covers a
   // race-condition in which a zero-byte had to be stuffed at the encoder
   // side to avoid a double-0xff appear. This zero-byte is never read
@@ -263,17 +263,17 @@ public:
   //
   template<int count>
   void Put(UBYTE bitbuffer)
-  { 
+  {
     int n = count;
     assert(n > 0 && n <= 32);
-    
+
     // Do we want to output more bits than
     // there is room in the buffer?
     while(n > m_ucBits) {
       // If so, output all bits we can.
       n     -= m_ucBits;   // that many bits go away
       m_ucB |= (bitbuffer>>n) & ((1<<m_ucBits)-1); // place them into buffer
-      // m_ucBits = 0; // superfluous: We've now zero bits space left. 
+      // m_ucBits = 0; // superfluous: We've now zero bits space left.
       m_pIO->Put(m_ucB);
       m_ucBits = 8;
       if (m_ucB == 0xff) {  // byte stuffing case?
@@ -297,14 +297,14 @@ public:
   void Put(UBYTE n,ULONG bitbuffer)
   {
     assert(n > 0 && n <= 32);
-    
+
     // Do we want to output more bits than
     // there is room in the buffer?
     while(n > m_ucBits) {
       // If so, output all bits we can.
       n          -= m_ucBits;   // that many bits go away
       m_ucB |= (bitbuffer>>n) & ((1<<m_ucBits)-1); // place them into buffer
-      // m_ucBits = 0; // superfluous: We've now zero bits space left. 
+      // m_ucBits = 0; // superfluous: We've now zero bits space left.
       m_pIO->Put(m_ucB);
       m_ucBits = 8;
       if (m_ucB == 0xff) {  // byte stuffing case?
@@ -328,4 +328,4 @@ public:
 
 ///
 #endif
-  
+

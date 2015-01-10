@@ -177,3 +177,6 @@ gitignore
 *.exe
 openjp2
 benchmark
+# codeblock
+*.layout
+*.depend

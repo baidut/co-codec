@@ -83,7 +83,7 @@ class ANSSequentialScan : public EntropyParser {
   // The QM coder doing the main work here.
   //
   // Last DC value, required for the DPCM coder.
-  LONG                     m_lDC[4];
+  // LONG                     m_lDC[4];
   //
   // Last difference value, required for selecting the
   // AC coding context.
