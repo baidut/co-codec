@@ -622,6 +622,8 @@ void Tables::ParseTables(class ByteStream *io)
     case 0xffda: // Start of scan.
     case 0xffde: // DHP
     case 0xfff7: // JPEG LS SOS
+    case JPGCODE_SOF_ANS_SEQ:
+	case JPGCODE_SOF_ANS_DIF_SEQ:
       return;
     case 0xffff: // A filler byte followed by a marker. Skip.
       io->Get();

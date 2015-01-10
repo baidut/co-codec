@@ -74,7 +74,8 @@ enum ScanType {
   ACResidual,
   JPEG_LS // not part of 10918, but handled here as well.
   ,NoCompression,
-  AnsSequential,
+  ANSSequential,
+  ANSDifferentialSequential,
 };
 
 #endif

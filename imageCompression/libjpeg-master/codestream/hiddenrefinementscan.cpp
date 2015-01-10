@@ -188,5 +188,6 @@ template class HiddenScan<RefinementScan>;
 template class HiddenScan<ACRefinementScan>;
 template class HiddenScan<SequentialScan>;
 template class HiddenScan<ACSequentialScan>;
+template class HiddenScan<ANSSequentialScan>;
 ///
 

@@ -827,9 +827,9 @@ void Encode(const char *source,const char *target,int quality,int hdrquality,int
 	      frametype |= JPGFLAG_PYRAMIDAL;
 	    
 		if (nocompression)
-		  frametype = 0xFF02;
+		  frametype = JPGCODE_SOF_NO_COMP;
 	    if (anscoding)
-		  frametype = 0xFF03;
+		  frametype = JPGCODE_SOF_ANS_SEQ;
 		
 		{		  
 	      int ok = 1;

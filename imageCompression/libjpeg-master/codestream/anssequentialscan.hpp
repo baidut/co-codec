@@ -48,12 +48,12 @@ the committee itself.
 ** Represents the scan including the scan header for the
 ** arithmetic coding procedure.
 **
-** $Id: NoCompressionScan.hpp,v 1.25 2012-09-23 14:10:12 thor Exp $
+** $Id: anssequentialscan.hpp,v 1.25 2012-09-23 14:10:12 thor Exp $
 **
 */
 
-#ifndef CODESTREAM_NOCOMPRESSIONSCAN_HPP
-#define CODESTREAM_NOCOMPRESSIONSCAN_HPP
+#ifndef CODESTREAM_ANSSEQUENTIALSCAN_HPP
+#define CODESTREAM_ANSSEQUENTIALSCAN_HPP
 
 /// Includes
 #include "tools/environment.hpp"
@@ -74,8 +74,8 @@ class BufferCtrl;
 class BlockBuffer;
 ///
 
-/// class NoCompressionScan
-class NoCompressionScan : public EntropyParser {
+/// class ANSSequentialScan
+class ANSSequentialScan : public EntropyParser {
   //
   // The QM coder doing the main work here.
   class QMCoder            m_Coder;
@@ -327,11 +327,11 @@ private:
 public:
   // Create an arithmetically coded sequential scan. The highbit is always
   // ignored as this setting only exists for progressive refinement scans.
-  NoCompressionScan(class Frame *frame,class Scan *scan,UBYTE start,UBYTE stop,
+  ANSSequentialScan(class Frame *frame,class Scan *scan,UBYTE start,UBYTE stop,
 		   UBYTE lowbit,UBYTE highbit,
 		   bool differential = false,bool residual = false);
   //
-  ~NoCompressionScan(void);
+  ~ANSSequentialScan(void);
   // 
   // Fill in the tables for decoding and decoding parameters in general.
   virtual void StartParseScan(class ByteStream *io,class BufferCtrl *ctrl);

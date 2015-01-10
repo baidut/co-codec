@@ -114,6 +114,12 @@ void Image::InstallDefaultParameters(ULONG width,ULONG height,UBYTE depth,
   //
   switch(type) {
     // All valid frame types.
+  case NoCompression:
+  	followup = NoCompression;
+	break;
+  case ANSSequential:
+  	followup = ANSDifferentialSequential;
+	break;
   case Baseline:
   case Sequential:
     followup = DifferentialSequential;
@@ -223,6 +229,12 @@ void Image::InstallDefaultParameters(ULONG width,ULONG height,UBYTE depth,
       //
       // Now create the second frame.
       switch(type) {
+	  case NoCompression:
+	  	residual = new(m_pEnviron) class Frame(m_pTables,NoCompression);
+		break;
+      case ANSSequential:
+	  	residual = new(m_pEnviron) class Frame(m_pTables,ANSDifferentialSequential); // don't understand why
+		break;
       case Baseline:
       case Sequential:
       case Progressive:
@@ -231,7 +243,9 @@ void Image::InstallDefaultParameters(ULONG width,ULONG height,UBYTE depth,
 	break;
       case ACSequential:
       case ACProgressive:
-	residual = new(m_pEnviron) class Frame(m_pTables,ACDifferentialLossless);
+	residual = new(m_pEnviron) class Frame(m_pTables,ACDifferentialLossless); // test if here is called when ac coding
+	JPG_THROW(INVALID_PARAMETER,"here is called when ac coding",
+		  "here is called when ac coding"); // is not called when accoding
 	break;
       default:
 	JPG_THROW(INVALID_PARAMETER,"Image::InstallDefaultParameters",
@@ -315,6 +329,12 @@ class Frame *Image::StartParseFrame(class ByteStream *io)
       case 0xfff7:
 	type = JPEG_LS;
 	break;
+	  case 0xFF02:
+		type = NoCompression;
+		break;
+	  case JPGCODE_SOF_ANS_SEQ:
+		type = ANSSequential;
+		break;
       default:
 	JPG_THROW(MALFORMED_STREAM,"Image::StartParseFrame",
 		  "unexpected marker while parsing the image, decoder out of sync");
@@ -343,6 +363,8 @@ class Frame *Image::StartParseFrame(class ByteStream *io)
     case 0xffca:
     case 0xffcb:
     case 0xfff7:
+	case 0xFF02:
+	case JPGCODE_SOF_ANS_SEQ:  // the case labels here are so weird!
       // All non-differential types. 
       // If this start of an image, all is well - this should then be the only frame.
       // Otherwise, it is illegal.
@@ -380,6 +402,13 @@ class Frame *Image::StartParseFrame(class ByteStream *io)
       case 0xfff7:
 	type = JPEG_LS;
 	break;
+
+	case 0xFF02:
+		type = NoCompression;
+		break;
+	case JPGCODE_SOF_ANS_SEQ:
+		type = ANSSequential;
+		break;
       }
       assert(m_pDimensions == NULL);
       m_pDimensions = new(m_pEnviron) class Frame(m_pTables,type);
@@ -415,6 +444,7 @@ class Frame *Image::StartParseFrame(class ByteStream *io)
     case 0xffcd:
     case 0xffce:
     case 0xffcf:
+	case 0xff04:
       // All differential types. This only works if a non-differential first frame is available.
       if (m_pSmallest == NULL)
 	JPG_THROW(MALFORMED_STREAM,"Image::StartParseFrame",
@@ -438,6 +468,9 @@ class Frame *Image::StartParseFrame(class ByteStream *io)
 	break;
       case 0xffcf:
 	type = ACDifferentialLossless;
+	break;
+	 case 0xff04:
+	type = ANSDifferentialSequential;
 	break;
       }
       {

@@ -387,6 +387,9 @@ class Scan *Frame::InstallDefaultParameters(ULONG width,ULONG height,UBYTE depth
   case ACProgressive:
   case ACDifferentialSequential:
   case ACDifferentialProgressive:
+  case ANSSequential:
+  case ANSDifferentialSequential:
+  case NoCompression:
     //
     if (m_ucPrecision != 8 && m_ucPrecision != 12)
       JPG_THROW(OVERFLOW_PARAMETER,"Frame::InstallDefaultScanParameters","image precision must be 8 or 12");
@@ -575,6 +578,7 @@ class Scan *Frame::InstallDefaultParameters(ULONG width,ULONG height,UBYTE depth
     case ACDifferentialSequential:
     case ACDifferentialProgressive:
     case ACDifferentialLossless:
+	case ANSDifferentialSequential:
       // Hmm. At this time, simply disallow. There is probably a way how to fit this into
       // the highest hierarchical level, but not now.
       JPG_THROW(NOT_IMPLEMENTED,"Frame::InstallDefaultScanParameters",
@@ -610,6 +614,7 @@ class Scan *Frame::InstallDefaultParameters(ULONG width,ULONG height,UBYTE depth
     case ACDifferentialSequential:
     case ACDifferentialProgressive:
     case ACDifferentialLossless:
+	case ANSDifferentialSequential:
       // Hmm. At this time, simply disallow. There is probably a way how to fit this into
       // the highest hierarchical level, but not now.
       JPG_THROW(NOT_IMPLEMENTED,"Frame::InstallDefaultScanParameters",
@@ -822,6 +827,7 @@ bool Frame::ParseTrailer(class ByteStream *io)
     case 0xffc2:
     case 0xffc3:
     case 0xffc9:
+	case JPGCODE_SOF_ANS_SEQ:
     case 0xffca:
     case 0xffcb:
     case 0xfff7:
@@ -834,6 +840,7 @@ bool Frame::ParseTrailer(class ByteStream *io)
     case 0xffc6:
     case 0xffc7:
     case 0xffcd:
+	case JPGCODE_SOF_ANS_DIF_SEQ:
     case 0xffce:  
     case 0xffcf:
     case 0xffdf: // EXP-marker also terminates this frame.
@@ -949,6 +956,9 @@ class LineAdapter *Frame::BuildLineAdapter(void)
   case ACDifferentialProgressive:
   case Residual:
   case ACResidual:
+  case ANSSequential:
+  case ANSDifferentialSequential:
+  case NoCompression:
     return new(m_pEnviron) class BlockLineAdapter(this); // all block based.
   case Lossless:
   case ACLossless:
@@ -974,6 +984,8 @@ class BitmapCtrl *Frame::BuildImage(void)
   case Progressive:  
   case ACSequential:
   case ACProgressive: 
+  case ANSSequential:
+  case NoCompression:
     {
       if (m_pTables->ResidualDataOf()) {
 	m_pBlockHelper  = new(m_pEnviron) class ResidualBlockHelper(this);

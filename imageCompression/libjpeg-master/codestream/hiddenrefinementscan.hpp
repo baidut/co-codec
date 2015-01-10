@@ -64,6 +64,7 @@ the committee itself.
 #include "codestream/entropyparser.hpp"
 #include "codestream/sequentialscan.hpp"
 #include "codestream/acsequentialscan.hpp"
+#include "codestream/anssequentialscan.hpp"
 #include "codestream/refinementscan.hpp"
 #include "codestream/acrefinementscan.hpp"
 ///
@@ -97,7 +98,7 @@ class HiddenScan : public BaseScan {
   //
   // Flush the remaining bits out to the stream on writing.
   virtual void Flush(bool final);
-  // 
+  //
   // Restart the parser at the next restart interval
   virtual void Restart(void);
   //
@@ -120,11 +121,11 @@ public:
 	     bool differential);
   //
   ~HiddenScan(void);
-  // 
+  //
   // Fill in the tables for decoding and decoding parameters in general.
   virtual void StartParseScan(class ByteStream *io,class BufferCtrl *ctrl);
   //
-  // Write the default tables for encoding 
+  // Write the default tables for encoding
   virtual void StartWriteScan(class ByteStream *io,class BufferCtrl *ctrl);
   //
   // Measure scan statistics.
@@ -137,6 +138,7 @@ typedef HiddenScan<RefinementScan> HiddenRefinementScan;
 typedef HiddenScan<ACRefinementScan> HiddenACRefinementScan;
 typedef HiddenScan<SequentialScan> ResidualHuffmanScan;
 typedef HiddenScan<ACSequentialScan> ResidualACScan;
+typedef HiddenScan<ANSSequentialScan> ResidualANSScan;
 ///
 
 ///

@@ -125,8 +125,8 @@ class Image *Encoder::CreateDefaultImage(ULONG width,ULONG height,UBYTE depth,UB
     JPG_THROW(OVERFLOW_PARAMETER,"Encoder::CreateImage","restart interval must be between 0 and 65535");
 
   switch(frametype){
-	  case 0xFF03:scantype = AnsSequential;break;
-	  case 0xFF02:scantype = NoCompression;break;
+	  case JPGCODE_SOF_ANS_SEQ:scantype = ANSSequential;break;
+	  case JPGCODE_SOF_NO_COMP:scantype = NoCompression;break;
 	default:
 	  switch(frametype & 0x07) {
 	  case JPGFLAG_BASELINE:
@@ -169,21 +169,23 @@ class Image *Encoder::CreateDefaultImage(ULONG width,ULONG height,UBYTE depth,UB
 
   if (residual) {
   	switch(frametype){
-	  case 0xFF02:
-	  case 0xFF03:
+	  case JPGCODE_SOF_NO_COMP:
+	  case JPGCODE_SOF_ANS_SEQ:
 	  	if (precision > 8) {
 			precision = 8;
       	}
-      break;
-    }
-    switch(frametype & 0x07) {
-    case JPGFLAG_BASELINE:
-    case JPGFLAG_SEQUENTIAL:
-    case JPGFLAG_PROGRESSIVE:
-      if (precision > 8) {
-	precision = 8;
-      }
-      break;
+		break;
+	  default:
+	  	switch(frametype & 0x07) {
+	    case JPGFLAG_BASELINE:
+	    case JPGFLAG_SEQUENTIAL:
+	    case JPGFLAG_PROGRESSIVE:
+	      if (precision > 8) {
+		precision = 8;
+	      }
+	      break;
+	    }
+      
     }
   }
 

@@ -1,4 +1,104 @@
 # depslib dependency file v1.0
+1420619769 source:e:\github\co-codec\imagecompression\libjpeg-master\cmd\main.cpp
+	"main.hpp"
+	"std/stdio.hpp"
+	"std/stdlib.hpp"
+	"std/string.hpp"
+	"std/math.hpp"
+	"tools/environment.hpp"
+	"tools/traits.hpp"
+	"interface/hooks.hpp"
+	"interface/tagitem.hpp"
+	"interface/parameters.hpp"
+	"interface/jpeg.hpp"
+
+1419855092 e:\github\co-codec\imagecompression\libjpeg-master\cmd\main.hpp
+
+1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\std\stdio.hpp
+	"config.h"
+	<stdio.h>
+	"std/stdarg.hpp"
+	"std/stdarg.hpp"
+
+1419855091 e:\github\co-codec\imagecompression\libjpeg-master\\config.h
+	"autoconfig.h"
+	"addons/addons.h"
+
+1419855091 e:\github\co-codec\imagecompression\libjpeg-master\\autoconfig.h
+
+1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\std\stdarg.hpp
+	"config.h"
+	<stdarg.h>
+
+1419855102 e:\github\co-codec\imagecompression\libjpeg-master\\std\stdlib.hpp
+	"config.h"
+	<stdlib.h>
+	"pegasus/picclib.h"
+	<stdlib.h>
+	<stddef.h>
+	<stdlib.h>
+
+1419855102 e:\github\co-codec\imagecompression\libjpeg-master\\std\string.hpp
+	"config.h"
+	<string.h>
+	"pegasus/picclib.h"
+	<memory.h>
+	<string.h>
+	<strings.h>
+
+1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\std\math.hpp
+	<math.h>
+	"pegasus/picclib.h"
+
+1419855102 e:\github\co-codec\imagecompression\libjpeg-master\\tools\environment.hpp
+	"config.h"
+	"interface/types.hpp"
+	"interface/tagitem.hpp"
+	"interface/hooks.hpp"
+	"interface/parameters.hpp"
+	"std/stdlib.hpp"
+	"std/setjmp.hpp"
+	"debug.hpp"
+
+1419855099 e:\github\co-codec\imagecompression\libjpeg-master\\interface\types.hpp
+	"config.h"
+	"jpgtypes.hpp"
+	<stdint.h>
+
+1419855099 e:\github\co-codec\imagecompression\libjpeg-master\\interface\jpgtypes.hpp
+	"config.h"
+	<stdint.h>
+
+1419855099 e:\github\co-codec\imagecompression\libjpeg-master\\interface\tagitem.hpp
+	"jpgtypes.hpp"
+
+1419855099 e:\github\co-codec\imagecompression\libjpeg-master\\interface\hooks.hpp
+	"jpgtypes.hpp"
+	"tagitem.hpp"
+
+1420618199 e:\github\co-codec\imagecompression\libjpeg-master\\interface\parameters.hpp
+	"jpgtypes.hpp"
+	"tagitem.hpp"
+
+1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\std\setjmp.hpp
+	"config.h"
+	"pegasus/setjmp.h"
+	<setjmp.h>
+
+1419855102 e:\github\co-codec\imagecompression\libjpeg-master\\tools\debug.hpp
+	"std/stdio.hpp"
+	"std/assert.hpp"
+
+1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\std\assert.hpp
+	<assert.h>
+
+1419855102 e:\github\co-codec\imagecompression\libjpeg-master\\tools\traits.hpp
+	"config.h"
+	"std/math.hpp"
+	"interface/types.hpp"
+
+1419855099 e:\github\co-codec\imagecompression\libjpeg-master\\interface\jpeg.hpp
+
 1419855092 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\aclosslessscan.cpp
 	"codestream/aclosslessscan.hpp"
 	"io/bytestream.hpp"
@@ -21,72 +121,6 @@
 	"codestream/entropyparser.hpp"
 	"codestream/predictivescan.hpp"
 
-1419855102 e:\github\co-codec\imagecompression\libjpeg-master\\tools\environment.hpp
-	"config.h"
-	"interface/types.hpp"
-	"interface/tagitem.hpp"
-	"interface/hooks.hpp"
-	"interface/parameters.hpp"
-	"std/stdlib.hpp"
-	"std/setjmp.hpp"
-	"debug.hpp"
-
-1419855091 e:\github\co-codec\imagecompression\libjpeg-master\\config.h
-	"autoconfig.h"
-	"addons/addons.h"
-
-1419855091 e:\github\co-codec\imagecompression\libjpeg-master\\autoconfig.h
-
-1419855099 e:\github\co-codec\imagecompression\libjpeg-master\\interface\types.hpp
-	"config.h"
-	"jpgtypes.hpp"
-	<stdint.h>
-
-1419855099 e:\github\co-codec\imagecompression\libjpeg-master\\interface\jpgtypes.hpp
-	"config.h"
-	<stdint.h>
-
-1419855099 e:\github\co-codec\imagecompression\libjpeg-master\\interface\tagitem.hpp
-	"jpgtypes.hpp"
-
-1419855099 e:\github\co-codec\imagecompression\libjpeg-master\\interface\hooks.hpp
-	"jpgtypes.hpp"
-	"tagitem.hpp"
-
-1420618199 e:\github\co-codec\imagecompression\libjpeg-master\\interface\parameters.hpp
-	"jpgtypes.hpp"
-	"tagitem.hpp"
-
-1419855102 e:\github\co-codec\imagecompression\libjpeg-master\\std\stdlib.hpp
-	"config.h"
-	<stdlib.h>
-	"pegasus/picclib.h"
-	<stdlib.h>
-	<stddef.h>
-	<stdlib.h>
-
-1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\std\setjmp.hpp
-	"config.h"
-	"pegasus/setjmp.h"
-	<setjmp.h>
-
-1419855102 e:\github\co-codec\imagecompression\libjpeg-master\\tools\debug.hpp
-	"std/stdio.hpp"
-	"std/assert.hpp"
-
-1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\std\stdio.hpp
-	"config.h"
-	<stdio.h>
-	"std/stdarg.hpp"
-	"std/stdarg.hpp"
-
-1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\std\stdarg.hpp
-	"config.h"
-	<stdarg.h>
-
-1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\std\assert.hpp
-	<assert.h>
-
 1419855096 e:\github\co-codec\imagecompression\libjpeg-master\\coding\qmcoder.hpp
 	"interface/types.hpp"
 	"tools/environment.hpp"
@@ -98,14 +132,6 @@
 	"interface/parameters.hpp"
 	"interface/hooks.hpp"
 	"std/string.hpp"
-
-1419855102 e:\github\co-codec\imagecompression\libjpeg-master\\std\string.hpp
-	"config.h"
-	<string.h>
-	"pegasus/picclib.h"
-	<memory.h>
-	<string.h>
-	<strings.h>
 
 1419855093 e:\github\co-codec\imagecompression\libjpeg-master\\codestream\entropyparser.hpp
 	"tools/environment.hpp"
@@ -159,7 +185,7 @@
 	"tools/environment.hpp"
 	"marker/scantypes.hpp"
 
-1420614249 e:\github\co-codec\imagecompression\libjpeg-master\\marker\scantypes.hpp
+1420868495 e:\github\co-codec\imagecompression\libjpeg-master\\marker\scantypes.hpp
 
 1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\marker\scan.hpp
 	"tools/environment.hpp"
@@ -244,15 +270,6 @@
 	"tools/rectangle.hpp"
 	"interface/imagebitmap.hpp"
 
-1419855102 e:\github\co-codec\imagecompression\libjpeg-master\\tools\traits.hpp
-	"config.h"
-	"std/math.hpp"
-	"interface/types.hpp"
-
-1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\std\math.hpp
-	<math.h>
-	"pegasus/picclib.h"
-
 1419855097 e:\github\co-codec\imagecompression\libjpeg-master\\control\blockbuffer.hpp
 	"tools/environment.hpp"
 
@@ -327,7 +344,7 @@
 	"marker/frame.hpp"
 	"control/blockbuffer.hpp"
 
-1419855093 e:\github\co-codec\imagecompression\libjpeg-master\\codestream\hiddenrefinementscan.hpp
+1420874277 e:\github\co-codec\imagecompression\libjpeg-master\\codestream\hiddenrefinementscan.hpp
 	"tools/environment.hpp"
 	"marker/scan.hpp"
 	"io/bitstream.hpp"
@@ -336,6 +353,7 @@
 	"codestream/entropyparser.hpp"
 	"codestream/sequentialscan.hpp"
 	"codestream/acsequentialscan.hpp"
+	"codestream/anssequentialscan.hpp"
 	"codestream/refinementscan.hpp"
 	"codestream/acrefinementscan.hpp"
 
@@ -363,20 +381,6 @@
 
 1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\marker\residualmarker.hpp
 	"tools/environment.hpp"
-
-1419855093 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\image.cpp
-	"tools/environment.hpp"
-	"marker/scantypes.hpp"
-	"codestream/image.hpp"
-	"marker/frame.hpp"
-	"io/bytestream.hpp"
-	"codestream/tables.hpp"
-	"control/bitmapctrl.hpp"
-	"control/hierarchicalbitmaprequester.hpp"
-
-1419855097 e:\github\co-codec\imagecompression\libjpeg-master\\control\hierarchicalbitmaprequester.hpp
-	"tools/environment.hpp"
-	"control/bitmapctrl.hpp"
 
 1419855093 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\jpeglsscan.cpp
 	"tools/environment.hpp"
@@ -542,85 +546,6 @@
 1419855094 e:\github\co-codec\imagecompression\libjpeg-master\\codestream\singlecomponentlsscan.hpp
 	"codestream/jpeglsscan.hpp"
 
-1419855094 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\tables.cpp
-	"codestream/tables.hpp"
-	"marker/quantization.hpp"
-	"marker/huffmantable.hpp"
-	"marker/actable.hpp"
-	"marker/adobemarker.hpp"
-	"marker/losslessmarker.hpp"
-	"marker/residualmarker.hpp"
-	"marker/residualspecsmarker.hpp"
-	"marker/restartintervalmarker.hpp"
-	"marker/jfifmarker.hpp"
-	"marker/exifmarker.hpp"
-	"marker/tonemappingmarker.hpp"
-	"marker/thresholds.hpp"
-	"marker/lscolortrafo.hpp"
-	"coding/huffmantemplate.hpp"
-	"coding/actemplate.hpp"
-	"io/bytestream.hpp"
-	"colortrafo/colortrafo.hpp"
-	"colortrafo/ycbcrtrafo.hpp"
-	"colortrafo/trivialtrafo.hpp"
-	"colortrafo/lslosslesstrafo.hpp"
-	"tools/traits.hpp"
-	"dct/dct.hpp"
-	"dct/idct.hpp"
-	"dct/sermsdct.hpp"
-
-1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\marker\quantization.hpp
-	"tools/environment.hpp"
-
-1419855100 e:\github\co-codec\imagecompression\libjpeg-master\\marker\huffmantable.hpp
-	"tools/environment.hpp"
-	"marker/scantypes.hpp"
-
-1419855100 e:\github\co-codec\imagecompression\libjpeg-master\\marker\adobemarker.hpp
-	"tools/environment.hpp"
-
-1419855100 e:\github\co-codec\imagecompression\libjpeg-master\\marker\losslessmarker.hpp
-	"tools/environment.hpp"
-
-1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\marker\residualspecsmarker.hpp
-	"tools/environment.hpp"
-
-1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\marker\restartintervalmarker.hpp
-	"tools/environment.hpp"
-
-1419855100 e:\github\co-codec\imagecompression\libjpeg-master\\marker\jfifmarker.hpp
-	"tools/environment.hpp"
-
-1419855100 e:\github\co-codec\imagecompression\libjpeg-master\\marker\exifmarker.hpp
-	"tools/environment.hpp"
-
-1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\marker\tonemappingmarker.hpp
-	"tools/environment.hpp"
-
-1419855100 e:\github\co-codec\imagecompression\libjpeg-master\\marker\lscolortrafo.hpp
-	"tools/environment.hpp"
-
-1419855097 e:\github\co-codec\imagecompression\libjpeg-master\\colortrafo\ycbcrtrafo.hpp
-	"tools/environment.hpp"
-	"tools/rectangle.hpp"
-	"tools/traits.hpp"
-	"interface/imagebitmap.hpp"
-	"colortrafo/colortrafo.hpp"
-
-1419855096 e:\github\co-codec\imagecompression\libjpeg-master\\colortrafo\trivialtrafo.hpp
-	"tools/environment.hpp"
-	"tools/rectangle.hpp"
-	"tools/traits.hpp"
-	"interface/imagebitmap.hpp"
-	"colortrafo/colortrafo.hpp"
-
-1419855096 e:\github\co-codec\imagecompression\libjpeg-master\\colortrafo\lslosslesstrafo.hpp
-	"tools/environment.hpp"
-	"tools/rectangle.hpp"
-	"tools/traits.hpp"
-	"interface/imagebitmap.hpp"
-	"colortrafo/colortrafo.hpp"
-
 1419855094 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\vesadctscan.cpp
 	"codestream/jpeglsscan.hpp"
 	"codestream/vesadctscan.hpp"
@@ -680,14 +605,6 @@
 	"std/string.hpp"
 	"coding/huffmanstatistics.hpp"
 
-1419855096 source:e:\github\co-codec\imagecompression\libjpeg-master\coding\huffmantemplate.cpp
-	"coding/huffmantemplate.hpp"
-	"io/bytestream.hpp"
-	"coding/huffmancoder.hpp"
-	"coding/huffmandecoder.hpp"
-	"coding/huffmanstatistics.hpp"
-	"std/stdio.hpp"
-
 1419855096 source:e:\github\co-codec\imagecompression\libjpeg-master\coding\qmcoder.cpp
 	"io/bytestream.hpp"
 	"interface/types.hpp"
@@ -710,6 +627,16 @@
 	"marker/frame.hpp"
 	"marker/component.hpp"
 
+1419855096 e:\github\co-codec\imagecompression\libjpeg-master\\colortrafo\lslosslesstrafo.hpp
+	"tools/environment.hpp"
+	"tools/rectangle.hpp"
+	"tools/traits.hpp"
+	"interface/imagebitmap.hpp"
+	"colortrafo/colortrafo.hpp"
+
+1419855100 e:\github\co-codec\imagecompression\libjpeg-master\\marker\lscolortrafo.hpp
+	"tools/environment.hpp"
+
 1419855096 source:e:\github\co-codec\imagecompression\libjpeg-master\colortrafo\rcttrafo.cpp
 	"tools/environment.hpp"
 	"tools/rectangle.hpp"
@@ -730,10 +657,24 @@
 	"tools/traits.hpp"
 	"std/string.hpp"
 
+1419855096 e:\github\co-codec\imagecompression\libjpeg-master\\colortrafo\trivialtrafo.hpp
+	"tools/environment.hpp"
+	"tools/rectangle.hpp"
+	"tools/traits.hpp"
+	"interface/imagebitmap.hpp"
+	"colortrafo/colortrafo.hpp"
+
 1419855097 source:e:\github\co-codec\imagecompression\libjpeg-master\colortrafo\ycbcrtrafo.cpp
 	"colortrafo/ycbcrtrafo.hpp"
 	"tools/traits.hpp"
 	"std/string.hpp"
+
+1419855097 e:\github\co-codec\imagecompression\libjpeg-master\\colortrafo\ycbcrtrafo.hpp
+	"tools/environment.hpp"
+	"tools/rectangle.hpp"
+	"tools/traits.hpp"
+	"interface/imagebitmap.hpp"
+	"colortrafo/colortrafo.hpp"
 
 1419855097 source:e:\github\co-codec\imagecompression\libjpeg-master\control\bitmapctrl.cpp
 	"tools/environment.hpp"
@@ -817,6 +758,10 @@
 	"colortrafo/colortrafo.hpp"
 	"codestream/rectanglerequest.hpp"
 	"codestream/tables.hpp"
+
+1419855097 e:\github\co-codec\imagecompression\libjpeg-master\\control\hierarchicalbitmaprequester.hpp
+	"tools/environment.hpp"
+	"control/bitmapctrl.hpp"
 
 1419855098 e:\github\co-codec\imagecompression\libjpeg-master\\control\linemerger.hpp
 	"tools/environment.hpp"
@@ -906,6 +851,9 @@
 	"dct/dct.hpp"
 	"std/string.hpp"
 
+1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\marker\residualspecsmarker.hpp
+	"tools/environment.hpp"
+
 1419855098 e:\github\co-codec\imagecompression\libjpeg-master\\dct\hadamard.hpp
 	"tools/environment.hpp"
 	"dct/dct.hpp"
@@ -976,8 +924,6 @@
 	"marker/scan.hpp"
 	"io/iostream.hpp"
 	"std/assert.hpp"
-
-1419855099 e:\github\co-codec\imagecompression\libjpeg-master\\interface\jpeg.hpp
 
 1419855093 e:\github\co-codec\imagecompression\libjpeg-master\\codestream\encoder.hpp
 	"interface/types.hpp"
@@ -1065,6 +1011,9 @@
 	"io/bytestream.hpp"
 	"marker/adobemarker.hpp"
 
+1419855100 e:\github\co-codec\imagecompression\libjpeg-master\\marker\adobemarker.hpp
+	"tools/environment.hpp"
+
 1419855100 source:e:\github\co-codec\imagecompression\libjpeg-master\marker\component.cpp
 	"marker/component.hpp"
 	"io/bytestream.hpp"
@@ -1074,23 +1023,8 @@
 	"io/bytestream.hpp"
 	"marker/exifmarker.hpp"
 
-1419855100 source:e:\github\co-codec\imagecompression\libjpeg-master\marker\frame.cpp
-	"marker/frame.hpp"
-	"marker/component.hpp"
-	"io/bytestream.hpp"
-	"std/string.hpp"
-	"codestream/tables.hpp"
-	"marker/scan.hpp"
-	"marker/residualmarker.hpp"
-	"marker/residualspecsmarker.hpp"
-	"control/bitmapctrl.hpp"
-	"control/lineadapter.hpp"
-	"control/blockbitmaprequester.hpp"
-	"control/linebitmaprequester.hpp"
-	"control/hierarchicalbitmaprequester.hpp"
-	"control/blocklineadapter.hpp"
-	"control/linelineadapter.hpp"
-	"control/residualblockhelper.hpp"
+1419855100 e:\github\co-codec\imagecompression\libjpeg-master\\marker\exifmarker.hpp
+	"tools/environment.hpp"
 
 1419855100 source:e:\github\co-codec\imagecompression\libjpeg-master\marker\huffmantable.cpp
 	"marker/huffmantable.hpp"
@@ -1099,15 +1033,25 @@
 	"coding/arithmetictemplate.hpp"
 	"std/string.hpp"
 
+1419855100 e:\github\co-codec\imagecompression\libjpeg-master\\marker\huffmantable.hpp
+	"tools/environment.hpp"
+	"marker/scantypes.hpp"
+
 1419855100 source:e:\github\co-codec\imagecompression\libjpeg-master\marker\jfifmarker.cpp
 	"tools/environment.hpp"
 	"io/bytestream.hpp"
 	"marker/jfifmarker.hpp"
 
+1419855100 e:\github\co-codec\imagecompression\libjpeg-master\\marker\jfifmarker.hpp
+	"tools/environment.hpp"
+
 1419855100 source:e:\github\co-codec\imagecompression\libjpeg-master\marker\losslessmarker.cpp
 	"tools/environment.hpp"
 	"io/bytestream.hpp"
 	"marker/losslessmarker.hpp"
+
+1419855100 e:\github\co-codec\imagecompression\libjpeg-master\\marker\losslessmarker.hpp
+	"tools/environment.hpp"
 
 1419855100 source:e:\github\co-codec\imagecompression\libjpeg-master\marker\lscolortrafo.cpp
 	"tools/environment.hpp"
@@ -1118,6 +1062,9 @@
 	"marker/quantization.hpp"
 	"io/bytestream.hpp"
 	"dct/dct.hpp"
+
+1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\marker\quantization.hpp
+	"tools/environment.hpp"
 
 1419855101 source:e:\github\co-codec\imagecompression\libjpeg-master\marker\residualmarker.cpp
 	"tools/environment.hpp"
@@ -1134,6 +1081,9 @@
 	"io/bytestream.hpp"
 	"marker/restartintervalmarker.hpp"
 
+1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\marker\restartintervalmarker.hpp
+	"tools/environment.hpp"
+
 1419855101 source:e:\github\co-codec\imagecompression\libjpeg-master\marker\scantypes.cpp
 
 1419855101 source:e:\github\co-codec\imagecompression\libjpeg-master\marker\thresholds.cpp
@@ -1146,6 +1096,9 @@
 	"std/assert.hpp"
 	"io/bytestream.hpp"
 	"marker/tonemappingmarker.hpp"
+
+1419855101 e:\github\co-codec\imagecompression\libjpeg-master\\marker\tonemappingmarker.hpp
+	"tools/environment.hpp"
 
 1419855101 source:e:\github\co-codec\imagecompression\libjpeg-master\std\assert.cpp
 
@@ -1263,18 +1216,138 @@
 	"upsampling/upsampler.hpp"
 	"std/string.hpp"
 
-1420619769 source:e:\github\co-codec\imagecompression\libjpeg-master\cmd\main.cpp
-	"main.hpp"
-	"std/stdio.hpp"
-	"std/stdlib.hpp"
-	"std/string.hpp"
-	"std/math.hpp"
-	"tools/environment.hpp"
+1420870395 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\anssequentialscan.cpp
+	"codestream/anssequentialscan.hpp"
+	"codestream/tables.hpp"
+	"marker/frame.hpp"
+	"marker/scan.hpp"
+	"marker/component.hpp"
+	"coding/quantizedrow.hpp"
+	"codestream/rectanglerequest.hpp"
+	"dct/idct.hpp"
+	"dct/sermsdct.hpp"
+	"std/assert.hpp"
+	"interface/bitmaphook.hpp"
+	"interface/imagebitmap.hpp"
+	"colortrafo/colortrafo.hpp"
 	"tools/traits.hpp"
-	"interface/hooks.hpp"
-	"interface/tagitem.hpp"
-	"interface/parameters.hpp"
-	"interface/jpeg.hpp"
+	"control/blockbitmaprequester.hpp"
+	"control/blockbuffer.hpp"
+	"control/blocklineadapter.hpp"
+	"coding/actemplate.hpp"
+	"marker/actable.hpp"
 
-1419855092 e:\github\co-codec\imagecompression\libjpeg-master\cmd\main.hpp
+1420870219 e:\github\co-codec\imagecompression\libjpeg-master\\codestream\anssequentialscan.hpp
+	"tools/environment.hpp"
+	"coding/qmcoder.hpp"
+	"coding/quantizedrow.hpp"
+	"codestream/entropyparser.hpp"
+
+1420873684 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\encoder.cpp
+	"interface/types.hpp"
+	"tools/environment.hpp"
+	"codestream/encoder.hpp"
+	"io/bytestream.hpp"
+	"codestream/tables.hpp"
+	"codestream/image.hpp"
+	"marker/frame.hpp"
+	"marker/scan.hpp"
+	"std/assert.hpp"
+
+1420872850 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\image.cpp
+	"tools/environment.hpp"
+	"marker/scantypes.hpp"
+	"codestream/image.hpp"
+	"marker/frame.hpp"
+	"io/bytestream.hpp"
+	"codestream/tables.hpp"
+	"control/bitmapctrl.hpp"
+	"control/hierarchicalbitmaprequester.hpp"
+
+1420870574 source:e:\github\co-codec\imagecompression\libjpeg-master\codestream\tables.cpp
+	"codestream/tables.hpp"
+	"marker/quantization.hpp"
+	"marker/huffmantable.hpp"
+	"marker/actable.hpp"
+	"marker/adobemarker.hpp"
+	"marker/losslessmarker.hpp"
+	"marker/residualmarker.hpp"
+	"marker/residualspecsmarker.hpp"
+	"marker/restartintervalmarker.hpp"
+	"marker/jfifmarker.hpp"
+	"marker/exifmarker.hpp"
+	"marker/tonemappingmarker.hpp"
+	"marker/thresholds.hpp"
+	"marker/lscolortrafo.hpp"
+	"coding/huffmantemplate.hpp"
+	"coding/actemplate.hpp"
+	"io/bytestream.hpp"
+	"colortrafo/colortrafo.hpp"
+	"colortrafo/ycbcrtrafo.hpp"
+	"colortrafo/trivialtrafo.hpp"
+	"colortrafo/lslosslesstrafo.hpp"
+	"tools/traits.hpp"
+	"dct/dct.hpp"
+	"dct/idct.hpp"
+	"dct/sermsdct.hpp"
+
+1420868899 source:e:\github\co-codec\imagecompression\libjpeg-master\coding\huffmantemplate.cpp
+	"coding/huffmantemplate.hpp"
+	"io/bytestream.hpp"
+	"coding/huffmancoder.hpp"
+	"coding/huffmandecoder.hpp"
+	"coding/huffmanstatistics.hpp"
+	"std/stdio.hpp"
+
+1420870473 source:e:\github\co-codec\imagecompression\libjpeg-master\marker\frame.cpp
+	"marker/frame.hpp"
+	"marker/component.hpp"
+	"io/bytestream.hpp"
+	"std/string.hpp"
+	"codestream/tables.hpp"
+	"marker/scan.hpp"
+	"marker/residualmarker.hpp"
+	"marker/residualspecsmarker.hpp"
+	"control/bitmapctrl.hpp"
+	"control/lineadapter.hpp"
+	"control/blockbitmaprequester.hpp"
+	"control/linebitmaprequester.hpp"
+	"control/hierarchicalbitmaprequester.hpp"
+	"control/blocklineadapter.hpp"
+	"control/linelineadapter.hpp"
+	"control/residualblockhelper.hpp"
+
+1420871415 source:e:\github\co-codec\imagecompression\libjpeg-master\marker\scan.cpp
+	"marker/scan.hpp"
+	"marker/residualmarker.hpp"
+	"io/bytestream.hpp"
+	"marker/frame.hpp"
+	"marker/component.hpp"
+	"codestream/tables.hpp"
+	"codestream/entropyparser.hpp"
+	"codestream/sequentialscan.hpp"
+	"codestream/acsequentialscan.hpp"
+	"codestream/nocompressionscan.hpp"
+	"codestream/anssequentialscan.hpp"
+	"codestream/losslessscan.hpp"
+	"codestream/aclosslessscan.hpp"
+	"codestream/refinementscan.hpp"
+	"codestream/acrefinementscan.hpp"
+	"codestream/hiddenrefinementscan.hpp"
+	"codestream/singlecomponentlsscan.hpp"
+	"codestream/lineinterleavedlsscan.hpp"
+	"codestream/sampleinterleavedlsscan.hpp"
+	"codestream/vesascan.hpp"
+	"codestream/vesadctscan.hpp"
+	"coding/huffmantemplate.hpp"
+	"marker/huffmantable.hpp"
+	"marker/actable.hpp"
+	"marker/thresholds.hpp"
+	"control/bitmapctrl.hpp"
+
+1420867924 e:\github\co-codec\imagecompression\libjpeg-master\\codestream\nocompressionscan.hpp
+	"tools/environment.hpp"
+	"coding/qmcoder.hpp"
+	"coding/quantizedrow.hpp"
+	"codestream/entropyparser.hpp"
 

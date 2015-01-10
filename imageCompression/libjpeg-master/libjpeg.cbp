@@ -42,6 +42,7 @@
 		<Unit filename="codestream/acrefinementscan.hpp" />
 		<Unit filename="codestream/acsequentialscan.cpp" />
 		<Unit filename="codestream/acsequentialscan.hpp" />
+		<Unit filename="codestream/anssequentialscan.cpp" />
 		<Unit filename="codestream/decoder.cpp" />
 		<Unit filename="codestream/decoder.hpp" />
 		<Unit filename="codestream/encoder.cpp" />

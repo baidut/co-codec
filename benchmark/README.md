@@ -27,7 +27,4 @@ simple to complex
 * no common[jpeg encoder-by karan anand](http://cn.mathworks.com/matlabcentral/fileexchange/14819-jpeg-encoder)
 
 
-Dr. Chang Wen Chen's course  work
-http://www.cse.buffalo.edu/faculty/chencw/
-  
- 
+[Dr. Chang Wen Chen](http://www.cse.buffalo.edu/faculty/chencw/)'s course work

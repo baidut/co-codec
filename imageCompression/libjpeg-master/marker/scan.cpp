@@ -61,6 +61,8 @@ the committee itself.
 #include "codestream/entropyparser.hpp"
 #include "codestream/sequentialscan.hpp"
 #include "codestream/acsequentialscan.hpp"
+#include "codestream/nocompressionscan.hpp"
+#include "codestream/anssequentialscan.hpp"
 #include "codestream/losslessscan.hpp"
 #include "codestream/aclosslessscan.hpp"
 #include "codestream/refinementscan.hpp"
@@ -103,7 +105,7 @@ Scan::~Scan(void)
 
 /// Scan::WriteMarker
 void Scan::WriteMarker(class ByteStream *io)
-{ 
+{
   bool jpegls = (m_pFrame->ScanTypeOf() == JPEG_LS);
   UWORD len   = m_ucCount * 2 + 6; // Size of the SOS marker
   int i;
@@ -117,7 +119,7 @@ void Scan::WriteMarker(class ByteStream *io)
     io->PutWord(0xffcc);
     m_pConditioner->WriteMarker(io);
   }
-  
+
   io->PutWord(0xffda); // SOS marker
 
   // Size of the marker
@@ -132,17 +134,17 @@ void Scan::WriteMarker(class ByteStream *io)
     // Write table selectors.
     assert(m_ucDCTable[i] < 16);
     assert(m_ucACTable[i] < 16);
-    
+
     if (jpegls) {
       io->Put(m_ucMappingTable[i]);
     } else {
       io->Put((m_ucDCTable[i] << 4) | m_ucACTable[i]);
     }
   }
-  
+
   io->Put(m_ucScanStart);
   io->Put(m_ucScanStop);
-  
+
   assert(m_ucHighBit < 16);
   assert(m_ucLowBit  < 16);
 
@@ -188,7 +190,7 @@ void Scan::ParseMarker(class ByteStream *io,ScanType type)
       JPG_THROW(MALFORMED_STREAM,"Scan::ParseMarker","SOS marker run out of data");
 
     m_ucComponent[i] = data;
-    
+
     data = io->Get(); // table selectors.
     if (data == ByteStream::EOF)
       JPG_THROW(MALFORMED_STREAM,"Scan::ParseMarker","SOS marker run out of data");
@@ -196,10 +198,10 @@ void Scan::ParseMarker(class ByteStream *io,ScanType type)
     if (m_pFrame->ScanTypeOf() != JPEG_LS) {
       m_ucDCTable[i] = data >> 4;
       m_ucACTable[i] = data & 0x0f;
-      
+
       if (m_ucDCTable[i] > 3)
 	JPG_THROW(MALFORMED_STREAM,"Scan::ParseMarker","DC table index in SOS marker is out of range, must be at most 4");
-      
+
       if (m_ucACTable[i] > 3)
 	JPG_THROW(MALFORMED_STREAM,"Scan::ParseMarker","AC table index in SOS marker is out of range, must be at most 4");
     } else {
@@ -214,7 +216,7 @@ void Scan::ParseMarker(class ByteStream *io,ScanType type)
   if (data > 63 && m_pFrame->ScanTypeOf() != JPEG_LS)
     JPG_THROW(MALFORMED_STREAM,"Scan::ParseMarker","start of scan index is out of range, must be between 0 and 63");
   m_ucScanStart = data;
-  
+
   //
   // End of spectral selection or interleave specifier.
   data = io->Get();
@@ -225,10 +227,10 @@ void Scan::ParseMarker(class ByteStream *io,ScanType type)
       JPG_THROW(MALFORMED_STREAM,"Scan::ParseMarker","end of scan index is out of range, must be between 0 and 63");
   } else {
     if (data > 4 /*2*/)
-      JPG_THROW(MALFORMED_STREAM,"Scan::ParseMarker","interleave specification is out of range, must be between 0 and 2"); 
+      JPG_THROW(MALFORMED_STREAM,"Scan::ParseMarker","interleave specification is out of range, must be between 0 and 2");
   }
   m_ucScanStop = data;
-  
+
   data = io->Get();
   if (data == ByteStream::EOF)
     JPG_THROW(MALFORMED_STREAM,"Scan::ParseMarker","SOS marker run out of data");
@@ -268,11 +270,15 @@ void Scan::ParseMarker(class ByteStream *io,ScanType type)
   case ACSequential:
   case DifferentialSequential:
   case ACDifferentialSequential:
+  case NoCompression:
+  case ANSSequential:
+  case ANSDifferentialSequential:
+
     if (m_ucScanStop != 63 || m_ucScanStart != 0)
       JPG_THROW(MALFORMED_STREAM,"Scan::ParseMarker",
 		"scan start must be zero and scan stop must be 63 for the sequential operating modes");
     // runs into here.
-  case JPEG_LS: 
+  case JPEG_LS:
     // Specs don't say anything what to do about them. Just assume they must be zero.
     if (m_ucHighBit != 0) // Low bit is the point transformation
       JPG_THROW(MALFORMED_STREAM,"Scan::ParseMarker",
@@ -332,11 +338,10 @@ void Scan::CreateParser(void)
   assert(m_pParser == NULL);
   //
   switch(type) {
+
   case NoCompression:
-  	m_pParser = new(m_pEnviron) class SequentialScan(m_pFrame,this,
-						     m_ucScanStart,m_ucScanStop,
-						     m_ucLowBit + m_ucHiddenBits,0);
     break;
+
   case Baseline:
   case Sequential:
     m_pParser = new(m_pEnviron) class SequentialScan(m_pFrame,this,
@@ -374,12 +379,22 @@ void Scan::CreateParser(void)
 						       m_ucScanStart,m_ucScanStop,
 						       m_ucLowBit + m_ucHiddenBits,0,true);
     break;
+case ANSSequential:
+	   m_pParser = new(m_pEnviron) class ANSSequentialScan(m_pFrame,this,
+								  m_ucScanStart,m_ucScanStop,
+								  m_ucLowBit + m_ucHiddenBits,0);
+	   break;
+case ANSDifferentialSequential:
+	   m_pParser = new(m_pEnviron) class ANSSequentialScan(m_pFrame,this,
+								  m_ucScanStart,m_ucScanStop,
+								  m_ucLowBit + m_ucHiddenBits,0,true);
+	   break;
   case Progressive:
     if (m_ucHighBit == 0) { // The first scan is parsed off by the regular parser.
       m_pParser = new(m_pEnviron) class SequentialScan(m_pFrame,this,
 						       m_ucScanStart,m_ucScanStop,
 						       m_ucLowBit,0);
-    } else { 
+    } else {
       m_pParser = new(m_pEnviron) class RefinementScan(m_pFrame,this,
 						       m_ucScanStart,m_ucScanStop,
 						       m_ucLowBit + m_ucHiddenBits,m_ucHighBit);
@@ -390,7 +405,7 @@ void Scan::CreateParser(void)
       m_pParser = new(m_pEnviron) class SequentialScan(m_pFrame,this,
 						       m_ucScanStart,m_ucScanStop,
 						       m_ucLowBit + m_ucHiddenBits,true);
-    } else { 
+    } else {
       // Even though the specs do not mention this, it makes perfect sense that the
       // refinement scan is a regular refinement scan without modification.
       m_pParser = new(m_pEnviron) class RefinementScan(m_pFrame,this,
@@ -398,12 +413,12 @@ void Scan::CreateParser(void)
 						       m_ucLowBit,m_ucHighBit);
     }
     break;
-  case ACProgressive: 
+  case ACProgressive:
     if (m_ucHighBit == 0) { // The first scan is parsed off by the regular parser.
       m_pParser = new(m_pEnviron) class ACSequentialScan(m_pFrame,this,
 							 m_ucScanStart,m_ucScanStop,
 							 m_ucLowBit + m_ucHiddenBits,0);
-    } else { 
+    } else {
       m_pParser = new(m_pEnviron) class ACRefinementScan(m_pFrame,this,
 							 m_ucScanStart,m_ucScanStop,
 							 m_ucLowBit + m_ucHiddenBits,m_ucHighBit);
@@ -416,7 +431,7 @@ void Scan::CreateParser(void)
       m_pParser = new(m_pEnviron) class SingleComponentLSScan(m_pFrame,this,
 							      m_ucScanStart, // NEAR
 							      m_ucMappingTable,
-							      m_ucLowBit + m_ucHiddenBits); 
+							      m_ucLowBit + m_ucHiddenBits);
       // Point transformation
       break;
     case 1:
@@ -442,8 +457,8 @@ void Scan::CreateParser(void)
 						    m_ucScanStart,
 						    m_ucMappingTable,
 						    m_ucLowBit + m_ucHiddenBits);
-      
-      break; 
+
+      break;
     }
     break;
   default:
@@ -464,7 +479,7 @@ void Scan::InstallDefaults(UBYTE depth,const struct JPG_TagItem *tags)
   ScanType type     = m_pFrame->ScanTypeOf();
 
   assert(m_pParser == NULL);
-  
+
   switch(type) {
   case Baseline:
   case Sequential:
@@ -484,6 +499,9 @@ void Scan::InstallDefaults(UBYTE depth,const struct JPG_TagItem *tags)
   case ACDifferentialSequential:
   case ACDifferentialProgressive:
   case ACResidual:
+  case NoCompression:
+  case ANSSequential:
+  case ANSDifferentialSequential:
     break;
   case ACLossless:
   case ACDifferentialLossless:
@@ -503,7 +521,7 @@ void Scan::InstallDefaults(UBYTE depth,const struct JPG_TagItem *tags)
 	      "JPEG allows only between one and four components per scan");
 
   m_ucCount = depth;
-  
+
   for(UBYTE i = 0;i < depth;i++) {
     m_ucComponent[i] = i; // simply sequential
 
@@ -520,16 +538,16 @@ void Scan::InstallDefaults(UBYTE depth,const struct JPG_TagItem *tags)
     } else {
       m_ucACTable[i] = 0;
     }
-  } 
+  }
 
   if (isjpegls) {
-    // None of the below required. 
+    // None of the below required.
   } else if (ishuffman) {
     m_pHuffman     = new(m_pEnviron) HuffmanTable(m_pEnviron);
   } else {
     m_pConditioner = new(m_pEnviron) ACTable(m_pEnviron);
   }
-  
+
   switch(type) {
   case Progressive:
   case ACProgressive:
@@ -538,11 +556,14 @@ void Scan::InstallDefaults(UBYTE depth,const struct JPG_TagItem *tags)
     m_ucScanStart = 0;
     m_ucScanStop  = 0; // DC only. User must create other scans manually.
     m_ucHighBit   = 0;
-    m_ucLowBit    = 0; 
+    m_ucLowBit    = 0;
     break;
   case Baseline:
-  case Sequential: 
+  case Sequential:
   case ACSequential:
+  case ANSSequential:
+  case ANSDifferentialSequential:
+  case NoCompression:
   case DifferentialSequential:
   case ACDifferentialSequential:
   case Residual:
@@ -551,7 +572,7 @@ void Scan::InstallDefaults(UBYTE depth,const struct JPG_TagItem *tags)
     m_ucScanStart = 0;
     m_ucScanStop  = 63;
     m_ucHighBit   = 0;
-    m_ucLowBit    = 0; 
+    m_ucLowBit    = 0;
     break;
   case Lossless:
   case ACLossless:
@@ -582,7 +603,7 @@ void Scan::InstallDefaults(UBYTE depth,const struct JPG_TagItem *tags)
   // Get the tags.
   m_ucComponent[0] = tags->GetTagData(JPGTAG_SCAN_COMPONENT0,0);
   m_ucComponent[1] = tags->GetTagData(JPGTAG_SCAN_COMPONENT1,1);
-  m_ucComponent[2] = tags->GetTagData(JPGTAG_SCAN_COMPONENT2,2);  
+  m_ucComponent[2] = tags->GetTagData(JPGTAG_SCAN_COMPONENT2,2);
   m_ucComponent[3] = tags->GetTagData(JPGTAG_SCAN_COMPONENT3,3);
   m_ucHiddenBits   = m_pFrame->TablesOf()->HiddenDCTBitsOf();
   //
@@ -591,7 +612,7 @@ void Scan::InstallDefaults(UBYTE depth,const struct JPG_TagItem *tags)
   case Progressive:
   case ACProgressive:
   case DifferentialProgressive:
-  case ACDifferentialProgressive: 
+  case ACDifferentialProgressive:
     m_ucScanStart    = tags->GetTagData(JPGTAG_SCAN_SPECTRUM_START,m_ucScanStart);
     m_ucScanStop     = tags->GetTagData(JPGTAG_SCAN_SPECTRUM_STOP ,m_ucScanStop);
     if (m_ucScanStart == 0 && m_ucScanStop)
@@ -688,6 +709,14 @@ void Scan::MakeResidualScan(class Component *comp)
 						      m_pFrame->TablesOf()->ResidualDataOf(),
 						      0,63,0,0,true,true);
     break;
+  case ANSSequential:
+  	m_ucACTable[0]   = m_ucDCTable[0] = 0;
+	m_pConditioner   = new(m_pEnviron) ACTable(m_pEnviron);
+    m_pParser        = new(m_pEnviron) ResidualANSScan(m_pFrame,this,
+						      m_pFrame->TablesOf()->ResidualDataOf(),
+						      0,63,0,0,true,true);
+    break;
+ // case NoCompression:
   case JPEG_LS:
     JPG_THROW(INVALID_PARAMETER,"Scan::MakeResidualACScan",
 	      "JPEG LS does not support residual coding");
@@ -706,7 +735,7 @@ void Scan::MakeResidualScan(class Component *comp)
 void Scan::MakeHiddenRefinementACScan(UBYTE bitposition,class Component *comp)
 {
   bool colortrafo   = (m_pFrame->DepthOf() > 1)?(m_pFrame->TablesOf()->UseColortrafo()):(false);
- 
+
   assert(m_pParser == NULL);
 
   m_ucCount        = 1;
@@ -716,8 +745,8 @@ void Scan::MakeHiddenRefinementACScan(UBYTE bitposition,class Component *comp)
   m_ucLowBit       = bitposition;
   m_ucHighBit      = bitposition+1;
   m_ucHiddenBits   = 0; // not here anymore.
-  
-  
+
+
   switch(m_pFrame->ScanTypeOf()) {
   case Baseline:
   case Sequential:
@@ -761,7 +790,7 @@ void Scan::MakeHiddenRefinementDCScan(UBYTE bitposition)
 {
   UBYTE i;
   bool colortrafo   = (m_pFrame->DepthOf() > 1)?(m_pFrame->TablesOf()->UseColortrafo()):(false);
- 
+
   assert(m_pParser == NULL);
 
   if (m_pFrame->DepthOf() > 4)
@@ -821,13 +850,13 @@ void Scan::StartParseHiddenRefinementScan(class BufferCtrl *ctrl)
 {
   class ResidualMarker *marker = m_pFrame->TablesOf()->RefinementDataOf();
   class ByteStream *io         = marker->StreamOf();
-  
+
   if (m_pParser == NULL) {
     ScanType type              = m_pFrame->ScanTypeOf();
     //
     switch(type) {
     case Baseline:
-    case Sequential: 
+    case Sequential:
     case Progressive:
       ParseMarker(io,Progressive);
       m_pParser = new(m_pEnviron) HiddenRefinementScan(m_pFrame,this,marker,
@@ -842,12 +871,12 @@ void Scan::StartParseHiddenRefinementScan(class BufferCtrl *ctrl)
 							 m_ucScanStart,m_ucScanStop,
 							 m_ucLowBit,m_ucHighBit,
 							 false,false);
-      break; 
+      break;
     default:
       JPG_THROW(NOT_IMPLEMENTED,"Scan::StartParseHiddenRefinementScan",
 		"sorry, the coding mode in the codestream is currently not supported");
     }
-  } 
+  }
 
   ctrl->PrepareForDecoding();
   m_pParser->StartParseScan(io,ctrl);
@@ -866,7 +895,7 @@ void Scan::StartParseResidualScan(class BufferCtrl *ctrl)
     //
     switch(type) {
     case Baseline:
-    case Sequential: 
+    case Sequential:
     case Progressive:
       ParseMarker(io,Residual);
       m_pParser = new(m_pEnviron) ResidualHuffmanScan(m_pFrame,this,marker,
@@ -881,12 +910,22 @@ void Scan::StartParseResidualScan(class BufferCtrl *ctrl)
 						 m_ucScanStart,m_ucScanStop,
 						 m_ucLowBit,m_ucHighBit,
 						 true,true);
-      break; 
+      break;
+
+   case ANSSequential:
+   	 ParseMarker(io,ACResidual);
+      m_pParser = new(m_pEnviron) ResidualANSScan(m_pFrame,this,marker,
+						 m_ucScanStart,m_ucScanStop,
+						 m_ucLowBit,m_ucHighBit,
+						 true,true);
+      break;
+   case NoCompression:
+    break;
     default:
       JPG_THROW(NOT_IMPLEMENTED,"Scan::StartParseHiddenRefinementScan",
 		"sorry, the coding mode in the codestream is currently not supported");
     }
-  } 
+  }
 
   ctrl->PrepareForDecoding();
   m_pParser->StartParseScan(io,ctrl);
@@ -902,7 +941,7 @@ void Scan::StartParseScan(class ByteStream *io,class BufferCtrl *ctrl)
   if (m_pParser == NULL) {
     CreateParser();
   }
-  
+
   ctrl->PrepareForDecoding();
   m_pParser->StartParseScan(io,ctrl);
 }
@@ -916,7 +955,7 @@ void Scan::StartWriteScan(class ByteStream *io,class BufferCtrl *ctrl)
 
   if (m_pHuffman)
     m_pHuffman->AdjustToStatistics();
-  
+
   ctrl->PrepareForEncoding();
   m_pParser->StartWriteScan(io,ctrl);
 }
@@ -991,7 +1030,7 @@ void Scan::CompleteSettings(void)
   if (m_pParser)
     JPG_THROW(OBJECT_EXISTS,"Scan::CompleteSettings",
 	      "Settings are already installed and active");
-  
+
   CreateParser();
 }
 ///
@@ -1012,7 +1051,7 @@ class HuffmanDecoder *Scan::DCHuffmanDecoderOf(UBYTE idx) const
   class HuffmanTemplate *t;
 
   assert(idx < 4);
-  
+
   t = m_pFrame->TablesOf()->FindDCHuffmanTable(m_ucDCTable[idx],m_pFrame->ScanTypeOf(),m_pFrame->PrecisionOf(),
 					       m_pFrame->HiddenPrecisionOf(),m_pFrame->TablesOf()->UseResiduals());
   if (t == NULL)
@@ -1036,7 +1075,7 @@ class HuffmanDecoder *Scan::ACHuffmanDecoderOf(UBYTE idx) const
   if (t == NULL)
     JPG_THROW(OBJECT_DOESNT_EXIST,"Scan::ACHuffmanDecoderOf","requested AC Huffman coding table not defined");
 
-  return t->DecoderOf();  
+  return t->DecoderOf();
 }
 ///
 
@@ -1045,7 +1084,7 @@ class HuffmanDecoder *Scan::ACHuffmanDecoderOf(UBYTE idx) const
 class HuffmanCoder *Scan::DCHuffmanCoderOf(UBYTE idx) const
 {
   class HuffmanTemplate *t;
-  
+
   assert(idx < 4);
 
   t = m_pHuffman->DCTemplateOf(m_ucDCTable[idx],m_pFrame->ScanTypeOf(),m_pFrame->PrecisionOf(),
@@ -1054,7 +1093,7 @@ class HuffmanCoder *Scan::DCHuffmanCoderOf(UBYTE idx) const
       JPG_THROW(OBJECT_DOESNT_EXIST,"Scan::DCHuffmanCoderOf","requested DC Huffman coding table not defined");
 
   t->AdjustToStatistics();
-  
+
   return t->EncoderOf();
 }
 ///
@@ -1064,7 +1103,7 @@ class HuffmanCoder *Scan::DCHuffmanCoderOf(UBYTE idx) const
 class HuffmanCoder *Scan::ACHuffmanCoderOf(UBYTE idx) const
 {
   class HuffmanTemplate *t;
-  
+
   assert(idx < 4);
 
   t = m_pHuffman->ACTemplateOf(m_ucACTable[idx],m_pFrame->ScanTypeOf(),m_pFrame->PrecisionOf(),
@@ -1073,7 +1112,7 @@ class HuffmanCoder *Scan::ACHuffmanCoderOf(UBYTE idx) const
       JPG_THROW(OBJECT_DOESNT_EXIST,"Scan::ACHuffmanCoderOf","requested DC Huffman coding table not defined");
 
   t->AdjustToStatistics();
-  
+
   return t->EncoderOf();
 }
 ///
@@ -1083,7 +1122,7 @@ class HuffmanCoder *Scan::ACHuffmanCoderOf(UBYTE idx) const
 class HuffmanStatistics *Scan::DCHuffmanStatisticsOf(UBYTE idx) const
 {
   class HuffmanTemplate *t;
-  
+
   assert(idx < 4);
 
   t = m_pHuffman->DCTemplateOf(m_ucDCTable[idx],m_pFrame->ScanTypeOf(),m_pFrame->PrecisionOf(),
@@ -1100,7 +1139,7 @@ class HuffmanStatistics *Scan::DCHuffmanStatisticsOf(UBYTE idx) const
 class HuffmanStatistics *Scan::ACHuffmanStatisticsOf(UBYTE idx) const
 {
   class HuffmanTemplate *t;
-  
+
   assert(idx < 4);
 
   t = m_pHuffman->ACTemplateOf(m_ucACTable[idx],m_pFrame->ScanTypeOf(),m_pFrame->PrecisionOf(),
@@ -1116,7 +1155,7 @@ class HuffmanStatistics *Scan::ACHuffmanStatisticsOf(UBYTE idx) const
 // Find the arithmetic coding conditioner table for the indicated
 // component and the DC band.
 class ACTemplate *Scan::DCConditionerOf(UBYTE idx) const
-{ 
+{
   assert(idx < 4);
 
   if (m_pConditioner) {
@@ -1130,7 +1169,7 @@ class ACTemplate *Scan::DCConditionerOf(UBYTE idx) const
 /// Scan::ACConditionerOf
 // The same for the AC band.
 class ACTemplate *Scan::ACConditionerOf(UBYTE idx) const
-{ 
+{
   assert(idx < 4);
 
   if (m_pConditioner) {

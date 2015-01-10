@@ -835,5 +835,9 @@ the committee itself.
 //
 ///
 
+#define JPGCODE_SOF_NO_COMP  		0xFF02
+#define JPGCODE_SOF_ANS_SEQ  		0xFF09
+#define JPGCODE_SOF_ANS_DIF_SEQ  	0xFF0D
+
 ///
 #endif

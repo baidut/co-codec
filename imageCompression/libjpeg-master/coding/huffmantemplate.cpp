@@ -219,6 +219,9 @@ void HuffmanTemplate::InitDCLuminanceDefault(ScanType type,UBYTE depth,UBYTE hid
   case ACDifferentialLossless:
   case ACResidual:
   case JPEG_LS:
+  case NoCompression:
+  case ANSSequential:
+  case ANSDifferentialSequential:
     assert(!"internal coding error - no Huffman table should be required for the selected coding mode");
     break;
   default:
@@ -312,6 +315,9 @@ void HuffmanTemplate::InitDCChrominanceDefault(ScanType type,UBYTE depth,UBYTE h
   case ACDifferentialLossless:
   case ACResidual:
   case JPEG_LS:
+  case ANSSequential:
+  case ANSDifferentialSequential:
+  case NoCompression:
     assert(!"internal coding error - no Huffman table should be required for the selected coding mode");
     break;
   default:
@@ -383,6 +389,9 @@ void HuffmanTemplate::InitACLuminanceDefault(ScanType type,UBYTE depth,UBYTE hid
   case ACDifferentialLossless:
   case ACResidual:
   case JPEG_LS:
+  case ANSSequential:
+  case ANSDifferentialSequential: 
+  case NoCompression:
     assert(!"internal coding error - no Huffman table should be required for the selected coding mode");
     break;
   default:
@@ -493,6 +502,9 @@ void HuffmanTemplate::InitACChrominanceDefault(ScanType type,UBYTE depth,UBYTE h
   case ACDifferentialLossless:
   case ACResidual:
   case JPEG_LS:
+  case ANSSequential:
+  case ANSDifferentialSequential:
+  case NoCompression:
     assert(!"internal coding error - no Huffman table should be required for the selected coding mode");
     break;
   default:
