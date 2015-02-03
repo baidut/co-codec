@@ -167,6 +167,7 @@ pip-log.txt
 ## baidut addition
 ##################
 ignore
+download
 gitignore
 *.lo
 *.o

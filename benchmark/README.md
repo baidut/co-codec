@@ -28,3 +28,20 @@ simple to complex
 
 
 [Dr. Chang Wen Chen](http://www.cse.buffalo.edu/faculty/chencw/)'s course work
+
+
+matlab相关问题解决
+------------------
+
+matlab中如何删除当前目录？或清空所有目录？谢谢！
+File--Preferences--Current Directory, 右边有个Clear History，点一下就行了
+
+matlab使用技巧
+------------------
+
+http://cn.mathworks.com/support/2012a/matlab/7.14/demos/RapidCodeIterationUsingCells_viewlet_swf.html
+* 块注释
+* ctrl+shift可以一个块一个快地执行
+* 在m文件某一行回车执行到那一行
+* 文件可以选择参数进行加减调节并立即看效果
+ 
